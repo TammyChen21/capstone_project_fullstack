@@ -1,6 +1,6 @@
 
 export type Plan = {
-    id: number,
+    id: string,
     description: string,
     checked: boolean,
     datumOfCheckIns: Date,
