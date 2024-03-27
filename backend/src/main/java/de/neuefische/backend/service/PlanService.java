@@ -12,7 +12,7 @@ import java.util.List;
 public class PlanService {
     private final PlanRepository planRepository;
 
-    public List<Plan> getAllPlans() {
+    public List<Plan> findAllPlans() {
         return planRepository.findAll();
     }
 
@@ -20,7 +20,5 @@ public class PlanService {
         return planRepository.save(plan);
     }
 
-    public void deletePlan(String id) {
-        planRepository.deleteById(id);
-    }
+
 }

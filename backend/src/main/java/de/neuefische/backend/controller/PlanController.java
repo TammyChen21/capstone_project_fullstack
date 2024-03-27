@@ -15,16 +15,13 @@ public class PlanController {
 
     @GetMapping
     public List<Plan> getAllPlans() {
-        return planService.getAllPlans();
+        return planService.findAllPlans();
     }
 
     @PostMapping
     public Plan postPlan(@RequestBody Plan plan) {
         return planService.addPlan(plan);
     }
-   @DeleteMapping("{id}")
-    public void deletePlan(@PathVariable String id) {
-        planService.deletePlan(id);
-    }
+
 
 }
