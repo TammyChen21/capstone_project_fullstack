@@ -33,6 +33,7 @@ export default function AddPlan({addPlan}:AddPlanProps) {
     function savePlan(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         axios.post("/api/plan", {
+            id: (plans.length + 1).toString(),
             description: inputValue,
             checked: false,
             datumOfCheckIns: new Date,
@@ -43,6 +44,7 @@ export default function AddPlan({addPlan}:AddPlanProps) {
         .catch(error =>
                 console.log("error", error))
     }
+
 
     return (
         <div>
@@ -56,7 +58,7 @@ export default function AddPlan({addPlan}:AddPlanProps) {
                         onChange={(e) => setInputValue(e.target.value)}
                     />
                     <button>Save</button>
-                        </form>
+                    </form>
                 </div>
             )}
 

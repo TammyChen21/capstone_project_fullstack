@@ -10,7 +10,6 @@ export default function PlanList({plans,togglePlan,deletePlan}:PlanListProps) {
 
     return (
         <div>
-            <h1>Plan List</h1>
             <ul>
                 {plans.map(plan=> (
                     <PlanItem key={plan.id} plan={plan} togglePlan={togglePlan} deletePlan={deletePlan}/>
