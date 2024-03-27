@@ -9,7 +9,7 @@ type PlanItemProps = {
 }
 export default function PlanItem({plan,togglePlan,deletePlan}:Readonly<PlanItemProps>) {
 
-function deleteThisPlan(id:string) {
+    function deleteThisPlan(id:string) {
     axios.delete(`/api/plan/${id}`)
         .then(response => {
             console.log("Response: ", response.data);
