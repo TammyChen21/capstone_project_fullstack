@@ -2,11 +2,27 @@
 import AddPlan from "./components/AddPlan.tsx";
 import PlanList from "./components/PlanList.tsx";
 import {Plan} from "./types/Plan.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 export default function App() {
 const [plans, setPlans] = useState<Plan[]>([]);
+
+function fetchPlans() {
+    axios.get("/api/plan")
+        .then(response => {
+            console.log("Response: ", response.data);
+            setPlans(response.data);
+        })
+        .catch(error => console.log("Error fetching data: ", error))
+}
+useEffect(fetchPlans,[])
+
+    if(!plans){
+        return "Loading..."
+    }
+
+
 const addPlan = (description:string) => {
     const newPlan: Plan= {
         id: (plans.length + 1).toString(),
@@ -21,17 +37,17 @@ const addPlan = (description:string) => {
 const deletePlan = (id:string) => {
     setPlans(plans.filter(plan => plan.id !== id.toString()));
 }
-const deleteThisPlan = (id:string) => {
+/*const deleteThisPlan = (id:string) => {
     axios.delete(`/api/plan/${id}`)
         .then(response => {
             console.log(response.data)
         })
         .catch(error =>
             console.log("error", error))
-}
+}*/
 const handleDeletePlan = (id:string) => {
     deletePlan(id);
-    deleteThisPlan(id)
+    // deleteThisPlan(id)
 }
 
 const togglePlan = (id:string) => {
