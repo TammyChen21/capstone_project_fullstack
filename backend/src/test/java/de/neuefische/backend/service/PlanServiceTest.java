@@ -40,4 +40,13 @@ class PlanServiceTest {
         verify(planRepository).save(p1);
         assertEquals(p1,actual);
     }
+    @Test
+    void deletePlan() {
+        //GIVEN
+        String id="1";
+        //WHEN
+        planService.deletePlan(id);
+        //THEN
+        verify(planRepository).deleteById(id);
+    }
 }
