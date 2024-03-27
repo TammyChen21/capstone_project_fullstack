@@ -22,9 +22,9 @@ public class PlanController {
     public Plan postPlan(@RequestBody Plan plan) {
         return planService.addPlan(plan);
     }
-   /* @DeleteMapping("{id}")
+   @DeleteMapping("{id}")
     public void deletePlan(@PathVariable String id) {
         planService.deletePlan(id);
-    }*/
+    }
 
 }

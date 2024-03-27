@@ -6,7 +6,7 @@ type PlanListProps = {
     togglePlan: (id:string) => void;
     deletePlan: (id:string) => void;
 }
-export default function PlanList({plans,togglePlan,deletePlan}:PlanListProps) {
+export default function PlanList({plans,togglePlan,deletePlan}:Readonly<PlanListProps>) {
 
     return (
         <div>

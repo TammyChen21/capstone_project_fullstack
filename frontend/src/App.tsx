@@ -37,17 +37,10 @@ const addPlan = (description:string) => {
 const deletePlan = (id:string) => {
     setPlans(plans.filter(plan => plan.id !== id.toString()));
 }
-/*const deleteThisPlan = (id:string) => {
-    axios.delete(`/api/plan/${id}`)
-        .then(response => {
-            console.log(response.data)
-        })
-        .catch(error =>
-            console.log("error", error))
-}*/
+
 const handleDeletePlan = (id:string) => {
     deletePlan(id);
-    // deleteThisPlan(id)
+
 }
 
 const togglePlan = (id:string) => {

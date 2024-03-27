@@ -4,7 +4,7 @@ import axios from "axios";
 type AddPlanProps = {
     addPlan: (description:string) => void;
 }
-export default function AddPlan({addPlan}:AddPlanProps) {
+export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
 
     const [plans, setPlans] = useState<Plan[]>([]);
     const [inputVisible, setInputVisible] = useState(false);

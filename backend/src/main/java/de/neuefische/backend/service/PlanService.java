@@ -20,7 +20,7 @@ public class PlanService {
         return planRepository.save(plan);
     }
 
-    /*public void deletePlan(String id) {
+    public void deletePlan(String id) {
         planRepository.deleteById(id);
-    }*/
+    }
 }

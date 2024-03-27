@@ -6,7 +6,7 @@ type PlanItemProps = {
     deletePlan: (id:string) => void;
 
 }
-export default function PlanItem({plan,togglePlan,deletePlan}: PlanItemProps) {
+export default function PlanItem({plan,togglePlan,deletePlan}:Readonly<PlanItemProps>) {
 
     return (
         <div>
