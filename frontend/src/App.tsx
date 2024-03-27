@@ -38,11 +38,6 @@ const deletePlan = (id:string) => {
     setPlans(plans.filter(plan => plan.id !== id.toString()));
 }
 
-const handleDeletePlan = (id:string) => {
-    deletePlan(id);
-
-}
-
 const togglePlan = (id:string) => {
     setPlans(plans.map(plan => {
         if(plan.id === id.toString()) {
@@ -55,7 +50,7 @@ const togglePlan = (id:string) => {
   return (
       <div>
           <AddPlan addPlan={addPlan}/>
-          <PlanList plans={plans} deletePlan={handleDeletePlan} togglePlan={togglePlan}/>
+          <PlanList plans={plans} deletePlan={deletePlan} togglePlan={togglePlan}/>
 
       </div>
   )
