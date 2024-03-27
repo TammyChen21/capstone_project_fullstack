@@ -1,6 +1,7 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.Plan;
+import de.neuefische.backend.model.UpdatePlan;
 import de.neuefische.backend.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,8 @@ public class PlanService {
        planRepository.deleteById(id);
     }
 
+    public Plan updatePlan(UpdatePlan plan, String id) {
+        Plan planToUpdate=new Plan(id,plan.description(),plan.checked(),plan.datumOfCheckIns(),plan.numberOfCheckIns());
+        return planRepository.save(planToUpdate);
+    }
 }

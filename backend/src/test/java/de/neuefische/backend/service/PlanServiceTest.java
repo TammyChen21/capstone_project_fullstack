@@ -1,6 +1,7 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.Plan;
+import de.neuefische.backend.model.UpdatePlan;
 import de.neuefische.backend.repository.PlanRepository;
 import org.junit.jupiter.api.Test;
 
@@ -48,5 +49,18 @@ class PlanServiceTest {
         planService.deletePlan(id);
         //THEN
         verify(planRepository).deleteById(id);
+    }
+    @Test
+    void updatePlan() {
+        //GIVEN
+        String id="1";
+        UpdatePlan updatePlan=new UpdatePlan("description1",true,null,1);
+        Plan planToUpdate=new Plan(id,updatePlan.description(),updatePlan.checked(),updatePlan.datumOfCheckIns(),updatePlan.numberOfCheckIns());
+        when(planRepository.save(planToUpdate)).thenReturn(planToUpdate);
+        //WHEN
+        Plan actual=planService.updatePlan(updatePlan,id);
+        //THEN
+        verify(planRepository).save(planToUpdate);
+        assertEquals(planToUpdate,actual);
     }
 }
