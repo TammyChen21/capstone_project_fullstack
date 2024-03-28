@@ -7,11 +7,9 @@ type PlanItemProps = {
     togglePlan: (id:string) => void;
     deletePlan: (id:string) => void;
     editPlan: (id:string, description:string) => void;
-    // onSave?: (updatedPlan: Plan) => void;
 }
 export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<PlanItemProps>) {
 
-    // const [description, setDescription] = useState<string>(plan.description);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editedDescription, setEditedDescription] = useState(plan.description);
 
@@ -29,24 +27,17 @@ export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<
         deleteThisPlan(plan.id);
     }
 
-   /* const editPlan = () => {
-        setEditedPlan(plan);
-        setEditing(true);
-    }*/
-
     const handleSaveClick = () =>{
        editPlan(plan.id, editedDescription);
         setIsEditing(false);
+        axios.put(`/api/plan/${plan.id}`, { description: editedDescription })
+            .then(response => {
+                console.log("Plan updated successfully:", response.data);
+            })
+            .catch(error => {
+                console.error("Error updating plan:", error);
+            });
     }
-
-
-    /*function editThisPlan(event: React.ChangeEvent<HTMLInputElement>) {
-        const newDescription = event.target.value;
-        setDescription(newDescription);
-        axios.put(`/api/plan/${plan.id}`, {...props.plan,description: newDescription})
-
-    }*/
-
 
     return (
         <div>
