@@ -13,7 +13,7 @@ function fetchPlans() {
         .then(response => {
             setPlans(response.data);
         })
-        .catch(error => console.log("Error fetching data: ", error))
+        .catch(error => console.error("Error fetching data: ", error))
 }
 useEffect(fetchPlans,[])
 
