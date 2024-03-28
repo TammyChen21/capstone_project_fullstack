@@ -12,10 +12,11 @@ export default function PlanItem({plan,togglePlan,deletePlan}:Readonly<PlanItemP
     function deleteThisPlan(id:string) {
     axios.delete(`/api/plan/${id}`)
         .then(response => {
-            console.log("Response: ", response.data);
+            console.info("Response: ", response.data);
             deletePlan(id);
         })
-        .catch(error => console.log("Error deleting plan: ", error))
+        .catch(error=>
+            console.error("Error deleting plan: ", error))
 }
     const handleDeleteClick = ()=>{
         deletePlan(plan.id);

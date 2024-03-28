@@ -11,7 +11,6 @@ const [plans, setPlans] = useState<Plan[]>([]);
 function fetchPlans() {
     axios.get("/api/plan")
         .then(response => {
-            console.log("Response: ", response.data);
             setPlans(response.data);
         })
         .catch(error => console.log("Error fetching data: ", error))
@@ -31,16 +30,17 @@ const addPlan = (description:string) => {
         datumOfCheckIns: new Date,
         numberOfCheckIns: 0
     };
+    console.info("New Plan: ", newPlan)
     setPlans([...plans, newPlan]);
 }
 
 const deletePlan = (id:string) => {
-    setPlans(plans.filter(plan => plan.id !== id.toString()));
+    setPlans(plans.filter(plan => plan.id !== id));
 }
 
 const togglePlan = (id:string) => {
     setPlans(plans.map(plan => {
-        if(plan.id === id.toString()) {
+        if(plan.id === id) {
             plan.checked = !plan.checked;
         }
         return plan;

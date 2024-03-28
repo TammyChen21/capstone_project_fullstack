@@ -24,12 +24,12 @@ public class PlanController {
         return planService.addPlan(plan);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void deletePlan(@PathVariable String id) {
         planService.deletePlan(id);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public Plan putPlan(@RequestBody UpdatePlan plan, @PathVariable String id) {
         return planService.updatePlan(plan, id);
     }

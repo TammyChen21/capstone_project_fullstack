@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {Plan} from "../types/Plan.ts";
 import axios from "axios";
+import {v4 as uuidv4} from "uuid";
+
 type AddPlanProps = {
     addPlan: (description:string) => void;
 }
@@ -17,7 +19,7 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
     const handleSaveClick = () => {
         if (inputValue.trim() !== '') {
             const newPlan: Plan= {
-                id: (plans.length + 1).toString(),
+                id: uuidv4(),
                 description: inputValue.trim(),
                 checked: false,
                 datumOfCheckIns: new Date,
@@ -33,17 +35,18 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
     function savePlan(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         axios.post("/api/plan", {
-            id: (plans.length + 1).toString(),
+            id: uuidv4(),
             description: inputValue,
             checked: false,
             datumOfCheckIns: new Date,
             numberOfCheckIns: 0
         } as Plan).
         then((response) => {
-            console.log(response.data)})
+            console.info("Response: ", response.data);
+        })
         .catch(error =>
-                console.log("error", error))
-    }
+                console.error("Error saving plan: ", error)
+    );}
 
 
     return (
