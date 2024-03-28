@@ -1,9 +1,9 @@
-
 import AddPlan from "./components/AddPlan.tsx";
 import PlanList from "./components/PlanList.tsx";
 import {Plan} from "./types/Plan.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {v4 as uuidv4} from "uuid";
 
 export default function App() {
 const [plans, setPlans] = useState<Plan[]>([]);
@@ -24,7 +24,7 @@ useEffect(fetchPlans,[])
 
 const addPlan = (description:string) => {
     const newPlan: Plan= {
-        id: (plans.length + 1).toString(),
+        id: uuidv4(),
         description: description,
         checked: false,
         datumOfCheckIns: new Date,
@@ -46,12 +46,22 @@ const togglePlan = (id:string) => {
         return plan;
     }));
 }
+    const editPlan = (id: string, description: string) => {
+
+        const updatedPlans = plans.map(plan => {
+            if (plan.id === id) {
+                return { ...plan, description: description };
+            }
+            return plan;
+        });
+
+        setPlans(updatedPlans);
+    };
 
   return (
       <div>
           <AddPlan addPlan={addPlan}/>
-          <PlanList plans={plans} deletePlan={deletePlan} togglePlan={togglePlan}/>
-
+          <PlanList plans={plans} deletePlan={deletePlan} togglePlan={togglePlan} editPlan={editPlan}/>
       </div>
   )
 }
