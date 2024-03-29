@@ -4,6 +4,7 @@ import {Plan} from "./types/Plan.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
+import PlanCard from "./components/PlanCard.tsx";
 
 export default function App() {
 const [plans, setPlans] = useState<Plan[]>([]);
@@ -38,7 +39,7 @@ const deletePlan = (id:string) => {
     setPlans(plans.filter(plan => plan.id !== id));
 }
 
-const togglePlan = (id:string) => {
+const checkPlan = (id:string) => {
     setPlans(plans.map(plan => {
         if(plan.id === id) {
             plan.checked = !plan.checked;
@@ -61,7 +62,8 @@ const togglePlan = (id:string) => {
   return (
       <div>
           <AddPlan addPlan={addPlan}/>
-          <PlanList plans={plans} deletePlan={deletePlan} togglePlan={togglePlan} editPlan={editPlan}/>
+          <PlanList plans={plans} deletePlan={deletePlan} checkPlan={checkPlan} editPlan={editPlan}/>
+          <PlanCard plans={plans}/>
       </div>
   )
 }

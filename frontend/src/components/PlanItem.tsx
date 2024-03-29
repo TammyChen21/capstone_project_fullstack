@@ -1,14 +1,15 @@
 import {Plan} from "../types/Plan.ts";
 import axios from "axios";
 import {useState} from "react";
+import CheckButton from "./CheckButton.tsx";
 
 type PlanItemProps = {
     plan: Plan;
-    togglePlan: (id:string) => void;
+    // checkPlan: (id:string) => void;
     deletePlan: (id:string) => void;
     editPlan: (id:string, description:string) => void;
 }
-export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<PlanItemProps>) {
+export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemProps>) {
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editedDescription, setEditedDescription] = useState(plan.description);
@@ -40,7 +41,7 @@ export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<
 
     return (
         <div>
-            <li style={{textDecoration: plan.checked ? "line-through" : "none"}}>
+            <li>
                 <div>
                     {isEditing ? (
                         <div>
@@ -54,9 +55,9 @@ export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<
                             <button onClick={() => setIsEditing(true)}>Edit</button>
                         </div>
                     )}
-                    <button onClick={() => togglePlan(plan.id)}>Finish</button>
                     <button onClick={handleDeleteClick}>Delete</button>
                 </div>
+                <CheckButton onCheck={() => { console.log("Checked"); }} onUncheck={() => { console.log("Unchecked"); }}/>
 
             </li>
         </div>
