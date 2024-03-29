@@ -23,7 +23,6 @@ export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<
             console.error("Error deleting plan: ", error))
 }
     const handleDeleteClick = ()=>{
-        deletePlan(plan.id);
         deleteThisPlan(plan.id);
     }
 
@@ -32,7 +31,7 @@ export default function PlanItem({plan,togglePlan,deletePlan,editPlan}:Readonly<
         setIsEditing(false);
         axios.put(`/api/plan/${plan.id}`, { description: editedDescription })
             .then(response => {
-                console.log("Plan updated successfully:", response.data);
+                console.info("Plan updated successfully:", response.data);
             })
             .catch(error => {
                 console.error("Error updating plan:", error);
