@@ -12,13 +12,8 @@ type CheckButtonProps = {
 
 export default function CheckButton({ onCheck, onUncheck,onMidnightChange,updateCounter}: Readonly<CheckButtonProps>) {
 
-    const [isChecked, setIsChecked] = useState(false);const counterContext = useCounter();
-
-    if (!counterContext) {
-        return null; // or handle the case where counterContext is undefined
-    }
-
-    const { counter, increaseCounter, decreaseCounter } = counterContext;
+    const [isChecked, setIsChecked] = useState(false);
+    const { increaseCounter, decreaseCounter } = useCounter()!;
 
     useEffect(() => {
         const interval = setInterval(() => {
