@@ -1,0 +1,16 @@
+.plan-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid #ff8fab;
+    border-radius: 1rem;
+    background: #ffc2d1;
+    transition: all 0.3s ease;
+}
+.check{
+    width: 30%;
+    display:flex;
+    justify-content: space-between;
+}

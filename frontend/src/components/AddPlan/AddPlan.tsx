@@ -8,7 +8,6 @@ type AddPlanProps = {
     addPlan: (description:string) => void;
 }
 export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
-
     const [plans, setPlans] = useState<Plan[]>([]);
     const [inputVisible, setInputVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
@@ -16,7 +15,6 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
     const handleAddClick = () => {
         setInputVisible(true);
     };
-
     const handleSaveClick = () => {
         if (inputValue.trim() !== '') {
             const newPlan: Plan= {
@@ -45,13 +43,12 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
         then((response) => {
             console.info("Response: ", response.data);
         })
-        .catch(error =>
+            .catch(error =>
                 console.error("Error saving plan: ", error)
-    );}
-
+            );}
 
     return (
-        <div>
+        <div className="btn">
             <button onClick={handleAddClick} className="add-btn">Add</button>
             {inputVisible && (
                 <div className="add-plan pink">

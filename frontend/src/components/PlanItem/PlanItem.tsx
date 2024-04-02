@@ -1,7 +1,8 @@
-import {Plan} from "../types/Plan.ts";
+import {Plan} from "../../types/Plan.ts";
 import axios from "axios";
 import {useState} from "react";
-import CheckButton from "./CheckButton.tsx";
+import "./PlanItem.css";
+import {useNavigate} from "react-router-dom";
 
 type PlanItemProps = {
     plan: Plan;
@@ -12,7 +13,7 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editedDescription, setEditedDescription] = useState(plan.description);
-    const [counter, setCounter] = useState(0);
+    const navigate = useNavigate();
 
     function deleteThisPlan(id:string) {
     axios.delete(`/api/plan/${id}`)
@@ -39,42 +40,26 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
             });
     }
 
-    const increaseCount = () => {
-        setCounter(prevCount => prevCount + 1);
-    };
+    function ToDetailsPage(id:string){
+        navigate("/plan/" + id);
+    }
 
-    const decreaseCount = () => {
-        setCounter(prevCount => prevCount - 1);
-    };
-    const updateCounter = (value:number) => {
-        setCounter(prevCounter => prevCounter + value);
-    };
 
     return (
-        <div>
-            <li>
-                <div>
+        <div className="plan-item" >
                     {isEditing ? (
                         <div>
                             <input type="text" value={editedDescription}
                                    onChange={(e) => setEditedDescription(e.target.value)}/>
-                            <button onClick={handleSaveClick}>Save</button>
+                            <button onClick={handleSaveClick} className="save-btn">Save</button>
                         </div>
                     ) : (
-                        <div>
-                            <span>{plan.description}</span>
-                            <button onClick={() => setIsEditing(true)}>Edit</button>
+                        <div className="edit">
+                            <div className="text" onClick={()=>{ToDetailsPage(plan.id)}}>{plan.description}</div>
+                            <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
                         </div>
                     )}
-                    <button onClick={handleDeleteClick}>Delete</button>
-                </div>
-                <CheckButton
-                    onCheck={increaseCount}
-                    onUncheck={decreaseCount}
-                    onMidnightChange={() => {}}
-                />
-
-            </li>
+                    <button onClick={handleDeleteClick} className="delete-btn">Delete</button>
         </div>
     );
 }

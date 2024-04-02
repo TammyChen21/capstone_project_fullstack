@@ -1,16 +1,18 @@
-import Counter from "../Counter.tsx";
 import {Plan} from "../../types/Plan.ts";
-import {useState} from "react";
 import "./PlanCards.css";
 import AddPlan from "../AddPlan/AddPlan.tsx";
 import {v4 as uuidv4} from "uuid";
+import PlanCard from "../PlanCard/PlanCard.tsx";
+import {useState} from "react";
+
 
 
 type PlanCardProps = {
     plans: Plan[];
+    addPlan: (description:string) => void;
 }
 export default function PlanCards({plans}: Readonly<PlanCardProps>){
-    const [planState, setPlanState] = useState<Plan[]>([]);
+    const [plansState, setPlansState] = useState<Plan[]>(plans);
     const addPlan = (description:string) => {
         const newPlan: Plan= {
             id: uuidv4(),
@@ -20,29 +22,19 @@ export default function PlanCards({plans}: Readonly<PlanCardProps>){
             numberOfCheckIns: 0
         };
         console.info("New Plan: ", newPlan)
-        setPlanState([...plans, newPlan]);
+        setPlansState([...plansState, newPlan]);
     }
-    const [counter, setCounter] = useState(0);
-    const increaseCounter = () => {
-        setCounter(prevCounter => prevCounter + 1);
-    };
 
-    const decreaseCounter = () => {
-        setCounter(prevCounter => prevCounter - 1);
-    };
     return(
-        <div>
-        <AddPlan addPlan={addPlan}/>
-        <div className="plan-card">
-            <ul className="cards">
-            {planState.map(plan => (
-                <div key={plan.id}>
-                    <p>{plan.description}</p>
-                    <Counter count={plan.numberOfCheckIns}/>
-                </div>
-            ))}
+        <>
+            <AddPlan addPlan={addPlan}/>
+            <div>
+                <ul className="cards">
+                    {plansState.map(plan => (
+                        <PlanCard key={plan.id} plan={plan}/>
+                    ))}
             </ul>
         </div>
-        </div>
+        </>
     )
 }

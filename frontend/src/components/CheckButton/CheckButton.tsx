@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import "./CheckButton.css";
 
 type CheckButtonProps = {
     onCheck: () => void;
@@ -38,7 +38,7 @@ export default function CheckButton({ onCheck,onUncheck,onMidnightChange}: Reado
     };
 
     return (
-        <button onClick={isChecked ? handleUncheck : handleCheck}>
+        <button onClick={isChecked ? handleUncheck : handleCheck} className="check-btn">
             {isChecked ? "Cancel" : "Check"}
         </button>
     );}

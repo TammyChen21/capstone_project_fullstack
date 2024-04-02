@@ -1,4 +1,4 @@
-
+import "./Counter.css";
 type CounterProps = {
     count: number;
 
@@ -6,8 +6,8 @@ type CounterProps = {
 export default function Counter({count}: Readonly<CounterProps>) {
 
     return (
-        <div>
-                <p>Finished: {count}</p>
+        <div className="counter">
+                <p>{count}Days</p>
         </div>
     );
 }
