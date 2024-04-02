@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
 import PlanCard from "./components/PlanCard.tsx";
+import {CounterProvider} from "./contexts/CounterContext.tsx";
 
 export default function App() {
 const [plans, setPlans] = useState<Plan[]>([]);
@@ -60,11 +61,13 @@ const checkPlan = (id:string) => {
     };
 
   return (
+      <CounterProvider>
       <div>
           <AddPlan addPlan={addPlan}/>
           <PlanList plans={plans} deletePlan={deletePlan} checkPlan={checkPlan} editPlan={editPlan}/>
           <PlanCard plans={plans}/>
       </div>
+      </CounterProvider>
   )
 }
 

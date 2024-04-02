@@ -5,7 +5,6 @@ import CheckButton from "./CheckButton.tsx";
 
 type PlanItemProps = {
     plan: Plan;
-    // checkPlan: (id:string) => void;
     deletePlan: (id:string) => void;
     editPlan: (id:string, description:string) => void;
 }
@@ -13,6 +12,7 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editedDescription, setEditedDescription] = useState(plan.description);
+    const [counter, setCounter] = useState(0);
 
     function deleteThisPlan(id:string) {
     axios.delete(`/api/plan/${id}`)
@@ -39,6 +39,17 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
             });
     }
 
+    const increaseCount = () => {
+        setCounter(prevCount => prevCount + 1);
+    };
+
+    const decreaseCount = () => {
+        setCounter(prevCount => prevCount - 1);
+    };
+    const updateCounter = (value:number) => {
+        setCounter(prevCounter => prevCounter + value);
+    };
+
     return (
         <div>
             <li>
@@ -57,7 +68,14 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
                     )}
                     <button onClick={handleDeleteClick}>Delete</button>
                 </div>
-                <CheckButton onCheck={() => { console.log("Checked"); }} onUncheck={() => { console.log("Unchecked"); }}/>
+                <CheckButton
+                    id={plan.id}
+                    counter={counter}
+                    onCheck={increaseCount}
+                    onUncheck={decreaseCount}
+                    updateCounter={updateCounter}
+                    onMidnightChange={() => {}}
+                />
 
             </li>
         </div>

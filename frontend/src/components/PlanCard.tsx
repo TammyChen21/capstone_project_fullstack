@@ -9,12 +9,13 @@ export default function PlanCard({plans}: Readonly<PlanCardProps>){
 
     return(
         <div>
-            <Counter/>
             {plans.map(plan => (
                 <div key={plan.id}>
                     <p>{plan.description}</p>
+                    <Counter/>
                 </div>
             ))}
+
         </div>
     )
 }

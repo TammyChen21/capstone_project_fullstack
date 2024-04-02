@@ -65,7 +65,6 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
                 </div>
             )}
 
-
         </div>
     );
 }

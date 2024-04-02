@@ -1,41 +1,55 @@
 import {useEffect, useState} from "react";
+import {useCounter} from "../contexts/CounterContext.tsx";
 
 type CheckButtonProps = {
+    id: string;
+    counter: number;
     onCheck: () => void;
     onUncheck: () => void;
+    updateCounter: (value: number) => void;
     onMidnightChange: (isMidnight: boolean) => void;
 };
 
-export default function CheckButton({ onCheck, onUncheck,onMidnightChange}: CheckButtonProps) {
+export default function CheckButton({ onCheck, onUncheck,onMidnightChange,updateCounter}: Readonly<CheckButtonProps>) {
 
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);const counterContext = useCounter();
+
+    if (!counterContext) {
+        return null; // or handle the case where counterContext is undefined
+    }
+
+    const { counter, increaseCounter, decreaseCounter } = counterContext;
 
     useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date();
-            if (now.getHours() === 0 && now.getMinutes() === 0) {
+            const isMidnight = now.getHours() === 1 && now.getMinutes() === 0 && now.getSeconds() === 0;
+            onMidnightChange(isMidnight);
+            if (isMidnight) {
                 setIsChecked(false);
                 onUncheck();
-                onMidnightChange(true);
-            } else {
-                onMidnightChange(false);
             }
-        }, 60000);
+        }, 1000);
+
         return () => clearInterval(interval);
-    }, []);
+    }, [onMidnightChange, onUncheck]);
 
     const handleCheck = () => {
+        updateCounter(1);
         setIsChecked(true);
+        increaseCounter();
         onCheck();
     };
 
     const handleUncheck = () => {
+        updateCounter(-1);
         setIsChecked(false);
+        decreaseCounter();
         onUncheck();
     };
 
     return (
         <button onClick={isChecked ? handleUncheck : handleCheck}>
-            {isChecked ? "取消打卡" : "打卡"}
+            {isChecked ? "Cancel" : "Check"}
         </button>
     );}
