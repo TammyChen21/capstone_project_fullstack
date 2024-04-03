@@ -1,44 +1,43 @@
-import {useEffect, useState} from "react";
-import "./CheckButton.css";
+import { useState, useEffect } from 'react';
+import "./CheckButton.css"
 
-type CheckButtonProps = {
-    onCheck: () => void;
-    onUncheck: () => void;
-    onMidnightChange: (isMidnight: boolean) => void;
-};
-
-export default function CheckButton({ onCheck,onUncheck,onMidnightChange}: Readonly<CheckButtonProps>) {
-
+export default function CheckButton  ()  {
     const [isChecked, setIsChecked] = useState(false);
+    const [counter, setCounter] = useState(0);
+
+    const handleButtonClick = () => {
+        if (isChecked) {
+            setCounter(prevCounter => prevCounter - 1);
+        } else {
+            setCounter(prevCounter => prevCounter + 1);
+        }
+        setIsChecked(prevChecked => !prevChecked);
+    };
+
+    const isMidnight = () => {
+        const now = new Date();
+        return now.getHours() === 1 && now.getMinutes() === 0 && now.getSeconds() === 0;
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const now = new Date();
-            const isMidnight = now.getHours() === 1 && now.getMinutes() === 0 && now.getSeconds() === 0;
-            onMidnightChange(isMidnight);
-            if (isMidnight) {
+            if (isMidnight()) {
                 setIsChecked(false);
-                onUncheck();
             }
+            /*if (isMidnight() && isChecked) {
+                setCounter(prevCounter => prevCounter + 1);
+            }*/
         }, 1000);
-
         return () => clearInterval(interval);
-    }, [onMidnightChange, onUncheck]);
-
-    const handleCheck = () => {
-
-        setIsChecked(true);
-        onCheck();
-    };
-
-    const handleUncheck = () => {
-
-        setIsChecked(false);
-        onUncheck();
-    };
+    }, [isChecked]);
 
     return (
-        <button onClick={isChecked ? handleUncheck : handleCheck} className="check-btn">
-            {isChecked ? "Cancel" : "Check"}
-        </button>
-    );}
+        <div className="button-box">
+            <p className="counter">{counter} Days</p>
+            <button onClick={handleButtonClick} className={`check-btn ${isChecked ? 'checked' : 'unchecked'}`}>
+                {isChecked ? 'Cancel' : 'Check'}
+            </button>
+        </div>
+    );
+};
+

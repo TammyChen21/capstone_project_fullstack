@@ -18,3 +18,13 @@
     box-shadow: none;
     transform: translateY(4px);
 }
+
+.counter{
+    color: #f72585;
+    font-size: 1.2em;
+}
+
+.button-box{
+    display: flex;
+    justify-content: space-around;
+}

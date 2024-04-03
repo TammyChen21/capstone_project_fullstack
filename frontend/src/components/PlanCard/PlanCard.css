@@ -8,6 +8,7 @@
     border-radius: 1rem;
     background: #ffc2d1;
     transition: all 0.3s ease;
+    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
 }
 .check{
     width: 30%;
