@@ -24,9 +24,6 @@ export default function CheckButton  ()  {
             if (isMidnight()) {
                 setIsChecked(false);
             }
-            /*if (isMidnight() && isChecked) {
-                setCounter(prevCounter => prevCounter + 1);
-            }*/
         }, 1000);
         return () => clearInterval(interval);
     }, [isChecked]);
@@ -39,5 +36,5 @@ export default function CheckButton  ()  {
             </button>
         </div>
     );
-};
+}
 
