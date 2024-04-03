@@ -1,7 +1,8 @@
 import {useState} from "react";
-import {Plan} from "../types/Plan.ts";
+import {Plan} from "../../types/Plan.ts";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
+import "./AddPlan.css";
 
 type AddPlanProps = {
     addPlan: (description:string) => void;
@@ -51,16 +52,17 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
 
     return (
         <div>
-            <button onClick={handleAddClick}>Add</button>
+            <button onClick={handleAddClick} className="add-btn">Add</button>
             {inputVisible && (
-                <div>
+                <div className="add-plan pink">
                     <form onSubmit={(event) => { handleSaveClick(); savePlan(event); }}>
                     <input
                         type="text"
                         value={inputValue}
+                        className={"input"}
                         onChange={(e) => setInputValue(e.target.value)}
                     />
-                    <button>Save</button>
+                    <button className="save-btn">Save</button>
                     </form>
                 </div>
             )}

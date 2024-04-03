@@ -1,8 +1,18 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import {createContext} from "react";
 
+export const CounterContext = createContext<{
+    counter: number;
+    increaseCounter: () => void;
+    decreaseCounter: () => void;
+} | undefined>(undefined);
+
+
+
+
+/*
 type CounterContextType = {
     counter: number;
-   increaseCounter: () => void;
+    increaseCounter: () => void;
     decreaseCounter: () => void;
 }
 
@@ -26,7 +36,4 @@ export function CounterProvider({ children }: Readonly<{ children: ReactNode }>)
         </CounterContext.Provider>
     );
 }
-
-    export const useCounter = () => {
-        return useContext(CounterContext);
-};
+*/

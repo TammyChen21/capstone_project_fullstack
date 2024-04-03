@@ -1,19 +1,15 @@
 import {useEffect, useState} from "react";
-import {useCounter} from "../contexts/CounterContext.tsx";
+
 
 type CheckButtonProps = {
-    id: string;
-    counter: number;
     onCheck: () => void;
     onUncheck: () => void;
-    updateCounter: (value: number) => void;
     onMidnightChange: (isMidnight: boolean) => void;
 };
 
-export default function CheckButton({ onCheck, onUncheck,onMidnightChange,updateCounter}: Readonly<CheckButtonProps>) {
+export default function CheckButton({ onCheck,onUncheck,onMidnightChange}: Readonly<CheckButtonProps>) {
 
     const [isChecked, setIsChecked] = useState(false);
-    const { increaseCounter, decreaseCounter } = useCounter()!;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -30,16 +26,14 @@ export default function CheckButton({ onCheck, onUncheck,onMidnightChange,update
     }, [onMidnightChange, onUncheck]);
 
     const handleCheck = () => {
-        updateCounter(1);
+
         setIsChecked(true);
-        increaseCounter();
         onCheck();
     };
 
     const handleUncheck = () => {
-        updateCounter(-1);
+
         setIsChecked(false);
-        decreaseCounter();
         onUncheck();
     };
 

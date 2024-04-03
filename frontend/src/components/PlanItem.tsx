@@ -69,11 +69,8 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
                     <button onClick={handleDeleteClick}>Delete</button>
                 </div>
                 <CheckButton
-                    id={plan.id}
-                    counter={counter}
                     onCheck={increaseCount}
                     onUncheck={decreaseCount}
-                    updateCounter={updateCounter}
                     onMidnightChange={() => {}}
                 />
 

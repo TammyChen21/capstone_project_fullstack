@@ -1,13 +1,13 @@
 
-import {useCounter} from "../contexts/CounterContext.tsx";
-export default function Counter() {
-    const counter = useCounter()
+type CounterProps = {
+    count: number;
+
+}
+export default function Counter({count}: Readonly<CounterProps>) {
 
     return (
         <div>
-            {counter !== undefined && (
-                <p>Finished: {counter.counter}</p>
-            )}
+                <p>Finished: {count}</p>
         </div>
     );
 }

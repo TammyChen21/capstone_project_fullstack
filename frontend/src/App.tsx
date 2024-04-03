@@ -1,14 +1,17 @@
-import AddPlan from "./components/AddPlan.tsx";
-import PlanList from "./components/PlanList.tsx";
+
+import PlanList from "./components/PlanList/PlanList.tsx";
 import {Plan} from "./types/Plan.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
-import PlanCard from "./components/PlanCard.tsx";
-import {CounterProvider} from "./contexts/CounterContext.tsx";
+import PlanCards from "./components/PlanCards/PlanCards.tsx";
+import Layout from "./components/Layout/Layout.tsx";
+import {Route, Routes} from "react-router-dom";
+import {Profile} from "./components/Profile/Profile.tsx";
 
 export default function App() {
 const [plans, setPlans] = useState<Plan[]>([]);
+
 
 function fetchPlans() {
     axios.get("/api/plan")
@@ -24,17 +27,7 @@ useEffect(fetchPlans,[])
     }
 
 
-const addPlan = (description:string) => {
-    const newPlan: Plan= {
-        id: uuidv4(),
-        description: description,
-        checked: false,
-        datumOfCheckIns: new Date,
-        numberOfCheckIns: 0
-    };
-    console.info("New Plan: ", newPlan)
-    setPlans([...plans, newPlan]);
-}
+
 
 const deletePlan = (id:string) => {
     setPlans(plans.filter(plan => plan.id !== id));
@@ -60,14 +53,19 @@ const checkPlan = (id:string) => {
         setPlans(updatedPlans);
     };
 
+
+
   return (
-      <CounterProvider>
-      <div>
-          <AddPlan addPlan={addPlan}/>
-          <PlanList plans={plans} deletePlan={deletePlan} checkPlan={checkPlan} editPlan={editPlan}/>
-          <PlanCard plans={plans}/>
-      </div>
-      </CounterProvider>
+      <>
+      <Layout>
+         <Routes>
+              <Route path="/" element={<h1>Home</h1>} />
+              <Route path="/plancards" element={<PlanCards plans={plans}/>}/>
+              <Route path="/plan" element={<PlanList plans={plans} deletePlan={deletePlan} checkPlan={checkPlan} editPlan={editPlan}/>}/>
+              <Route path="/profile" element={<Profile/>}/>
+          </Routes>
+      </Layout>
+      </>
   )
 }
 
