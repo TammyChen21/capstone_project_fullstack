@@ -55,7 +55,7 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
                         </div>
                     ) : (
                         <div className="edit">
-                            <div className="text" onClick={()=>{ToDetailsPage(plan.id)}}>{plan.description}</div>
+                            <div className="text" onClick={()=>{ToDetailsPage(plan.id)}} onKeyDown={(e) => { if (e.key === 'Enter') { ToDetailsPage(plan.id) } }}>{plan.description}</div>
                             <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
                         </div>
                     )}
