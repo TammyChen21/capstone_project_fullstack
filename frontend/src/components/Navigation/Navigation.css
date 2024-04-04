@@ -1,0 +1,41 @@
+.nav ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    border-radius: 10px;
+    background-color: #F69CB6F6;
+    padding: 8px;
+    margin-bottom: 20px;
+}
+
+.nav ul li{
+    text-align: center;
+    font-size: 1.8em;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.nav ul li a{
+    text-decoration: none;
+    color: white;
+}
+.nav ul li a:hover {
+    color: #f72585;
+}
+
+.nav ul li a:hover svg {
+    animation: moveIcon 0.3s infinite alternate;
+}
+
+@keyframes moveIcon {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-6px);
+    }
+}
+
+
+
+

@@ -1,0 +1,88 @@
+.btn{
+        display: flex;
+        justify-content: flex-end;
+    }
+
+.add-btn{
+    width: 60px;
+    height: 30px;
+    border-radius: 12px;
+    border:0;
+    background-color: #F69CB6;
+    color:#fff;
+    font-size: 14px;
+    box-shadow: 0 2px 0 #FF70A6;
+    margin-bottom: 18px;
+}
+
+.add-btn:hover{
+    background-color: #FF70A6;
+    cursor: pointer;
+}
+
+.add-btn:active{
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+.add-plan{
+    display:inline-block;
+    width: calc(25% - 12px);
+    min-height: 120px;
+    border-radius: 18px;
+    margin-right: 12px;
+    margin-bottom: 18px;
+    vertical-align: top;
+}
+
+.input{
+   min-height: 30px;
+    width: 100%;
+    border:0;
+    outline: 0;
+    margin: 0;
+    font-size: 14px;
+    background-color: transparent;
+}
+.save-btn:hover{
+    background-color: #4cc9f0;
+    cursor: pointer;
+}
+
+.add-plan.pink{
+    background-color:#ffc8dd;
+    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
+}
+
+.save-btn{
+    width: 60px;
+    height: 30px;
+    border-radius: 12px;
+    border:0;
+    background-color: #a2d2ff;
+    color:#fff;
+    font-size: 14px;
+    box-shadow: 0 2px 0 #6fa6d6;
+}
+
+.save-btn:active{
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+
+@media screen and (max-width: 960px){
+    .add-plan{
+        width: calc(33% - 12px);
+    }
+}
+@media screen and (max-width: 720px){
+    .add-plan{
+        width: calc(50% - 12px);
+    }
+}
+@media screen and (max-width: 414px){
+    .add-plan{
+        width: 100%;
+    }
+}

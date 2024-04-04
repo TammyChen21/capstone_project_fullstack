@@ -1,13 +1,13 @@
 import {useState} from "react";
-import {Plan} from "../types/Plan.ts";
+import {Plan} from "../../types/Plan.ts";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
+import "./AddPlan.css";
 
 type AddPlanProps = {
     addPlan: (description:string) => void;
 }
 export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
-
     const [plans, setPlans] = useState<Plan[]>([]);
     const [inputVisible, setInputVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
@@ -15,7 +15,6 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
     const handleAddClick = () => {
         setInputVisible(true);
     };
-
     const handleSaveClick = () => {
         if (inputValue.trim() !== '') {
             const newPlan: Plan= {
@@ -44,27 +43,26 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
         then((response) => {
             console.info("Response: ", response.data);
         })
-        .catch(error =>
+            .catch(error =>
                 console.error("Error saving plan: ", error)
-    );}
-
+            );}
 
     return (
-        <div>
-            <button onClick={handleAddClick}>Add</button>
+        <div className="btn">
+            <button onClick={handleAddClick} className="add-btn">Add</button>
             {inputVisible && (
-                <div>
+                <div className="add-plan pink">
                     <form onSubmit={(event) => { handleSaveClick(); savePlan(event); }}>
                     <input
                         type="text"
                         value={inputValue}
+                        className={"input"}
                         onChange={(e) => setInputValue(e.target.value)}
                     />
-                    <button>Save</button>
+                    <button className="save-btn">Save</button>
                     </form>
                 </div>
             )}
-
 
         </div>
     );

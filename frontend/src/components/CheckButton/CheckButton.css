@@ -1,0 +1,31 @@
+.check-btn{
+    width: 60px;
+    height: 30px;
+    border-radius: 12px;
+    border:0;
+    background-color: #F69CB6;
+    color:#fff;
+    font-size: 14px;
+    box-shadow: 0 2px 0 #FF70A6;
+}
+
+.check-btn:hover{
+    background-color: #FF70A6;
+    cursor: pointer;
+}
+
+.check-btn:active{
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+.counter{
+    color: #f72585;
+    font-size: 1.2em;
+}
+
+.button-box{
+    display: flex;
+    justify-content: space-around;
+    gap:15px;
+}

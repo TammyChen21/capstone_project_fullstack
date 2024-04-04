@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/plan")
 @RequiredArgsConstructor
-public class PlanController {
+public class PlanListController {
     private final PlanService planService;
 
     @GetMapping
