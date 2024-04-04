@@ -44,22 +44,44 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
         navigate("/plan/" + id);
     }
 
+    const renderContent = () => {
+        if (isEditing) {
+            return (
+                <div>
+                    <input
+                        type="text"
+                        value={editedDescription}
+                        onChange={(e) => setEditedDescription(e.target.value)}
+                    />
+                    <button onClick={handleSaveClick} className="save-btn">Save</button>
+                </div>
+            );
+        } else {
+            return (
+                <div className="edit">
+                    <div
+                        className="text"
+                        onClick={() => {ToDetailsPage(plan.id)}}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                ToDetailsPage(plan.id)
+                            }
+                        }}
+                        tabIndex={0}
+                    >
+                        {plan.description}
+                    </div>
+                    <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
+                </div>
+            );
+        }
+    };
+
 
     return (
         <div className="plan-item" >
-                    {isEditing ? (
-                        <div>
-                            <input type="text" value={editedDescription}
-                                   onChange={(e) => setEditedDescription(e.target.value)}/>
-                            <button onClick={handleSaveClick} className="save-btn">Save</button>
-                        </div>
-                    ) : (
-                        <div className="edit">
-                            <div className="text" onClick={()=>{ToDetailsPage(plan.id)}} onKeyDown={(e) => { if (e.key === 'Enter') { ToDetailsPage(plan.id) } }}>{plan.description}</div>
-                            <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
-                        </div>
-                    )}
-                    <button onClick={handleDeleteClick} className="delete-btn">Delete</button>
+            {renderContent()}
+            <button onClick={handleDeleteClick} className="delete-btn">Delete</button>
         </div>
     );
 }

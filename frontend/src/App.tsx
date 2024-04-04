@@ -59,7 +59,6 @@ export default function App() {
 
 
   return (
-      <>
       <Layout>
          <Routes>
               <Route path="/" element={<h1>Home</h1>} />
@@ -69,7 +68,6 @@ export default function App() {
               <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Layout>
-      </>
   )
 }
 
