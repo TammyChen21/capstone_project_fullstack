@@ -8,7 +8,7 @@ import PlanCards from "./components/PlanCards/PlanCards.tsx";
 import Layout from "./components/Layout/Layout.tsx";
 import {Route, Routes} from "react-router-dom";
 import {Profile} from "./components/Profile/Profile.tsx";
-import PlanDetailsPage from "./components/PlanDetailsPage.tsx";
+import PlanDetailsPage from "./components/PlanDetailsPage/PlanDetailsPage.tsx";
 
 export default function App() {
 
