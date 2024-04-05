@@ -45,22 +45,5 @@ public class PlanService {
 
         return planRepository.save(existingPlan);
     }
-  /*  public Plan checkIn(String id, boolean isChecked) {
-        Plan existingPlan = planRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
-
-        existingPlan.setChecked(isChecked);
-
-        if (isChecked) {
-            existingPlan.setNumberOfCheckIns(existingPlan.getNumberOfCheckIns() + 1);
-        } else {
-            if (existingPlan.getNumberOfCheckIns() > 0) {
-                existingPlan.setNumberOfCheckIns(existingPlan.getNumberOfCheckIns() - 1);
-            }
-        }
-
-        existingPlan.setDatumOfCheckIns(new Date());
-
-        return planRepository.save(existingPlan);*/
     }
 

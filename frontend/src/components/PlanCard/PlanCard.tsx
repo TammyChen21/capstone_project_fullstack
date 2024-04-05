@@ -9,7 +9,7 @@ type PlanCardProps = {
 export default function PlanCard({plan}: Readonly<PlanCardProps>) {
     const [isChecked, setIsChecked] = useState(false);
     const [counter, setCounter] = useState(0);
-    const updateData = (isChecked:boolean) => {
+    const updateData = () => {
         if (isChecked) {
             setCounter(prevCounter => prevCounter - 1);
         } else {

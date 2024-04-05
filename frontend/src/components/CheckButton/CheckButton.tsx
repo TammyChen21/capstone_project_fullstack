@@ -22,7 +22,6 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
 
         axios.post(`/api/plan/${plan.id}`, { updateData })
             .then(response => {
-                console.log('Check-in successful');
                 console.log(isChecked)
                 console.log(response.data)
             })
@@ -31,28 +30,6 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
 
             });
     };
-
-    /*const handleButtonClick = () => {
-        const newCheckedState = !isChecked;
-        setIsChecked(newCheckedState);
-
-        if (isChecked) {
-            setCounter(prevCounter => prevCounter - 1);
-        } else {
-            setCounter(prevCounter => prevCounter + 1);
-        }
-
-        axios.post(`/api/plan/${plan.id}`, {isChecked:newCheckedState})
-
-            .then(response => {
-                console.log('Checked in:', response.data);
-                updateData(response.data);
-            })
-            .catch(error => {
-                console.error('Error checking in:', error);
-                console.log(isChecked)
-            });
-    };*/
 
     const isMidnight = () => {
         const now = new Date();
