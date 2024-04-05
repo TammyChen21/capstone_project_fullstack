@@ -33,4 +33,9 @@ public class PlanListController {
     public Plan putPlan(@RequestBody UpdatePlan plan, @PathVariable String id) {
         return planService.updatePlan(plan, id);
     }
+
+    @PostMapping("/{id}")
+    public Plan checkIn(@RequestBody Plan plan, @PathVariable String id) {
+        return planService.checkIn(plan, id);
+    }
 }
