@@ -1,7 +1,8 @@
 import "./PlanCard.css";
 import {Plan} from "../../types/Plan.ts";
 import CheckButton from "../CheckButton/CheckButton.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 type PlanCardProps = {
     plan: Plan;
@@ -9,24 +10,38 @@ type PlanCardProps = {
 export default function PlanCard({plan}: Readonly<PlanCardProps>) {
     const [isChecked, setIsChecked] = useState(false);
     const [counter, setCounter] = useState(0);
+
+    useEffect(() => {
+        axios.get(`/api/plan/${plan.id}`)
+            .then(response => {
+                const { numberOfCheckIns } = response.data;
+                setCounter(numberOfCheckIns);
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching plan details:', error);
+            });
+    }, [plan.id]);
+
     const updateData = () => {
-        if (isChecked) {
-            setCounter(prevCounter => prevCounter - 1);
-        } else {
-            setCounter(prevCounter => prevCounter + 1);
-        }
-         setIsChecked(prevChecked => !prevChecked);
-    }
+        setIsChecked(prevChecked => !prevChecked);
+        setCounter(prevCounter => prevCounter + (isChecked ? -1 : 1));
+    };
+
 
     return(
-       <div className="plan-card">
-        <div className="text">
-            {plan.description}
+        <div className="plan-card">
+            <div className="text">
+                {plan.description}
+            </div>
+           {/* <div className="date">
+                {new Date(plan.datumOfCheckIns).toLocaleDateString()}*/}
+            <div className="check">
+                <CheckButton plan={plan} updateData={updateData}/>
+            </div>
+            <div className="counter">
+                {counter} Days
+            </div>
         </div>
-           <div className="check">
-               <CheckButton plan={plan} updateData={updateData}/>
-           </div>
-
-    </div>
-   )
+);
 }

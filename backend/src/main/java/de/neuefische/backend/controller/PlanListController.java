@@ -38,4 +38,8 @@ public class PlanListController {
     public Plan checkIn(@RequestBody Plan plan, @PathVariable String id) {
         return planService.checkIn(plan, id);
     }
+    @GetMapping("/{id}")
+    public Plan getNumberOfPlan(@PathVariable String id) {
+        return planService.getNumberOfPlan(id);
+    }
 }
