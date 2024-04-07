@@ -64,7 +64,7 @@ export default function App() {
               <Route path="/" element={<h1>Home</h1>} />
               <Route path="/plancards" element={<PlanCards plans={plans} addPlan={addPlan}/>}/>
               <Route path="/plan" element={<PlanList plans={plans} deletePlan={deletePlan} editPlan={editPlan}/>}/>
-              <Route path="/plan/:id" element={<PlanDetailsPage/>}/>
+              {/*<Route path="/plan/:id" element={<PlanDetailsPage plan={plans[0]}/>}/>*/}
               <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Layout>

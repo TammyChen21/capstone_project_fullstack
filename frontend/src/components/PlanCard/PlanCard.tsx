@@ -16,7 +16,7 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
             .then(response => {
                 const { numberOfCheckIns } = response.data;
                 setCounter(numberOfCheckIns);
-                console.log(response.data)
+
             })
             .catch(error => {
                 console.error('Error fetching plan details:', error);
@@ -26,7 +26,9 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
     const updateData = () => {
         setIsChecked(prevChecked => !prevChecked);
         setCounter(prevCounter => prevCounter + (isChecked ? -1 : 1));
+        console.log(plan.description)
     };
+
 
 
     return(
@@ -34,8 +36,6 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
             <div className="text">
                 {plan.description}
             </div>
-           {/* <div className="date">
-                {new Date(plan.datumOfCheckIns).toLocaleDateString()}*/}
             <div className="check">
                 <CheckButton plan={plan} updateData={updateData}/>
             </div>

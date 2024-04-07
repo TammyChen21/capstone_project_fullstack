@@ -37,7 +37,6 @@ public class PlanService {
                 .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
 
         existingPlan.setId(id);
-
         existingPlan.setDescription(plan.getDescription());
         existingPlan.setChecked(plan.isChecked());
         existingPlan.setDatumOfCheckIns(new Date());
@@ -61,4 +60,13 @@ public class PlanService {
             throw new IllegalArgumentException("Plan not found with id: " + id);
         }
     }
+
+    /*public Plan getDateOfCheckIns(String id) {
+        Optional<Plan> optionalPlan = planRepository.findById(id);
+        if (optionalPlan.isPresent()) {
+            return optionalPlan.get();
+        } else {
+            throw new IllegalArgumentException("Plan not found with id: " + id);
+        }
+    }*/
 }

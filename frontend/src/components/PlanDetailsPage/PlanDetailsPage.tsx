@@ -3,23 +3,18 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Plan} from "../../types/Plan.ts";
 
-type plans={
-    id: string;
-    description: string;
-    checked: boolean;
-    datumOfCheckIns: Date;
-    numberOfCheckIns: number;
-
-}
-export default function PlanDetailsPage(): JSX.Element {
+type PlanDetailsPageProps = {
+    plan: Plan;
+};
+export default function PlanDetailsPage({ plan }: PlanDetailsPageProps): JSX.Element {
     const [plans, setPlans] = useState<Plan[]>([]);
 
     useEffect(() => {
-        fetchPlans();
+        fetchPlan();
     }, []);
 
-    const fetchPlans = () => {
-        axios.get('/api/plan')
+    const fetchPlan = () => {
+        axios.get(`/api/plan/${plan.id}`)
             .then(response => {
                 setPlans(response.data);
                 console.log(response.data)

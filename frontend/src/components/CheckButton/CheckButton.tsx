@@ -10,6 +10,7 @@ type CheckButtonProps = {
 export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonProps>) {
     const [isChecked, setIsChecked] = useState(plan.checked);
     const [counter, setCounter] = useState(0);
+    const [description, setDescription] = useState(plan.description);
     const handleButtonClick = () => {
         if (isChecked) {
             setCounter(prevCounter => prevCounter - 1);
@@ -17,13 +18,13 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
             setCounter(prevCounter => prevCounter + 1);
         }
         setIsChecked(prevChecked => !prevChecked);
-
+        setDescription(plan.description);
+        console.log(plan.description)
         updateData(plan);
 
-        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked})
+        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description})
             .then(response => {
-                console.log(isChecked)
-                console.log(response.data)
+                console.log(response.data.description)
             })
             .catch(error => {
                 console.error('Error checking in:', error);
@@ -47,7 +48,6 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
 
     return (
         <div className="button-box">
-            {/*<p className="counter">{counter} Days</p>*/}
             <button onClick={handleButtonClick} className={`check-btn ${isChecked ? 'checked' : 'unchecked'}`}>
                 {isChecked ? 'Cancel' : 'Check'}
             </button>
