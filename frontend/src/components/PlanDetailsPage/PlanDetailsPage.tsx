@@ -31,25 +31,8 @@ export default function PlanDetailsPage(): JSX.Element {
     const tileContent = ({ date }: { date: Date}) => {
         const dateKey = date.toDateString();
         const hasPlanForDate = plans.some(planDate => planDate.toDateString() === dateKey);
-        return hasPlanForDate ? "✅" : "❌";
+        return hasPlanForDate ? "✅" : "";
     }
-       /* const dateKey = date.toDateString();
-
-        const hasPlanForDate = plans.some(plan =>
-            Array.isArray(plan.datumOfCheckIns) &&
-            plan.datumOfCheckIns.some(checkInDate =>
-            {const checkInDateTimestamp = new Date(checkInDate).toDateString();
-                console.log('CheckInDate:', checkInDateTimestamp);
-                return checkInDateTimestamp === dateKey;})
-
-    );
-       console.log('Plans:', plans);
-        console.log('Date:', date);
-        console.log('Has plan for date:', hasPlanForDate);
-       // console.log("dateKey",dateKey)
-
-        return hasPlanForDate ? "✅" :"❌";*/
-
 
     return (
         <div>
