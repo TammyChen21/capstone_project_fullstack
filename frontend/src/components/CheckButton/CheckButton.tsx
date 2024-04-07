@@ -47,7 +47,7 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
 
     return (
         <div className="button-box">
-            <p className="counter">{counter} Days</p>
+            {/*<p className="counter">{counter} Days</p>*/}
             <button onClick={handleButtonClick} className={`check-btn ${isChecked ? 'checked' : 'unchecked'}`}>
                 {isChecked ? 'Cancel' : 'Check'}
             </button>
