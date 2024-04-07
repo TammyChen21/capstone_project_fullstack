@@ -2,21 +2,22 @@ import Calendar from "react-calendar";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Plan} from "../../types/Plan.ts";
+import {useParams} from "react-router-dom";
 
-type PlanDetailsPageProps = {
-    plan: Plan;
-};
-export default function PlanDetailsPage({ plan }: Readonly<PlanDetailsPageProps>): JSX.Element {
+export default function PlanDetailsPage(): JSX.Element {
     const [plans, setPlans] = useState<Plan[]>([]);
 
+    const { id } = useParams(); // 获取路由参数中的 ID
+
+
     useEffect(() => {
-        if (plan && plan.id) {
+        if (id) {
             fetchPlan();
         }
-    }, [plan]);
+    }, [id]);
 
     const fetchPlan = () => {
-        axios.get(`/api/plan/${plan.id}`)
+        axios.get(`/api/plan/${id}`)
             .then(response => {
                 setPlans([response.data]);
                 console.log(response.data)

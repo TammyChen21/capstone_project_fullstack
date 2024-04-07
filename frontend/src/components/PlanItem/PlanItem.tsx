@@ -2,6 +2,7 @@ import {Plan} from "../../types/Plan.ts";
 import axios from "axios";
 import {useState} from "react";
 import "./PlanItem.css";
+import {Link} from "react-router-dom";
 
 type PlanItemProps = {
     plan: Plan;
@@ -54,13 +55,9 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
             return (
                 <div className="edit">
                     <div className="edit">
-                        <a
-                            href={`/plan/${plan.id}`}
-                            className="text"
-                        >
+                        <Link to={`/plan/${plan.id}`} className="description">
                             {plan.description}
-                        </a>
-                        {plan.description}
+                        </Link>
                     </div>
                     <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
                 </div>
