@@ -6,17 +6,19 @@ import {Plan} from "../../types/Plan.ts";
 type PlanDetailsPageProps = {
     plan: Plan;
 };
-export default function PlanDetailsPage({ plan }: PlanDetailsPageProps): JSX.Element {
+export default function PlanDetailsPage({ plan }: Readonly<PlanDetailsPageProps>): JSX.Element {
     const [plans, setPlans] = useState<Plan[]>([]);
 
     useEffect(() => {
-        fetchPlan();
-    }, []);
+        if (plan && plan.id) {
+            fetchPlan();
+        }
+    }, [plan]);
 
     const fetchPlan = () => {
         axios.get(`/api/plan/${plan.id}`)
             .then(response => {
-                setPlans(response.data);
+                setPlans([response.data]);
                 console.log(response.data)
             })
             .catch(error => {

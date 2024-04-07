@@ -61,12 +61,8 @@ public class PlanService {
         }
     }
 
-    /*public Plan getDateOfCheckIns(String id) {
-        Optional<Plan> optionalPlan = planRepository.findById(id);
-        if (optionalPlan.isPresent()) {
-            return optionalPlan.get();
-        } else {
-            throw new IllegalArgumentException("Plan not found with id: " + id);
-        }
-    }*/
+    public Plan getDateOfCheckIns(String id) {
+     return planRepository.findById(id)
+             .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
+    }
 }

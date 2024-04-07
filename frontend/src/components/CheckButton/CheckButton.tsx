@@ -19,7 +19,6 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
         }
         setIsChecked(prevChecked => !prevChecked);
         setDescription(plan.description);
-        console.log(plan.description)
         updateData(plan);
 
         axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description})

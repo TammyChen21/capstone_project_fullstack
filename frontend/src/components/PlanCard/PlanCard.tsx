@@ -26,10 +26,7 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
     const updateData = () => {
         setIsChecked(prevChecked => !prevChecked);
         setCounter(prevCounter => prevCounter + (isChecked ? -1 : 1));
-        console.log(plan.description)
     };
-
-
 
     return(
         <div className="plan-card">
