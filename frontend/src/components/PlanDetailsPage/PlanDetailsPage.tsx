@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 export default function PlanDetailsPage(): JSX.Element {
     const [plans, setPlans] = useState<Plan[]>([]);
 
-    const { id } = useParams(); // 获取路由参数中的 ID
+    const { id } = useParams();
 
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function PlanDetailsPage(): JSX.Element {
     }, [id]);
 
     const fetchPlan = () => {
-        axios.get(`/api/plan/${id}`)
+        axios.get(`/api/plan/date/${id}`)
             .then(response => {
                 setPlans([response.data]);
             })
