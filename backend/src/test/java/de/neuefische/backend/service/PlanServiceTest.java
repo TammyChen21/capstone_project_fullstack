@@ -55,12 +55,51 @@ class PlanServiceTest {
         //GIVEN
         String id="1";
         UpdatePlan updatePlan=new UpdatePlan("description1",true,null,1);
-        Plan planToUpdate=new Plan(id,updatePlan.description(),updatePlan.checked(),updatePlan.datumOfCheckIns(),updatePlan.numberOfCheckIns());
+        Plan planToUpdate=new Plan(id,updatePlan.getDescription(),updatePlan.isChecked(),updatePlan.getDatumOfCheckIns(),updatePlan.getNumberOfCheckIns());
         when(planRepository.save(planToUpdate)).thenReturn(planToUpdate);
         //WHEN
         Plan actual=planService.updatePlan(updatePlan,id);
         //THEN
         verify(planRepository).save(planToUpdate);
         assertEquals(planToUpdate,actual);
+    }
+    @Test
+    void checkIn() {
+        //GIVEN
+        String id="1";
+        Plan plan=new Plan(id,"description1",true,null,1);
+        Plan existingPlan=new Plan(id,"description1",true,null,1);
+        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(existingPlan));
+        when(planRepository.save(existingPlan)).thenReturn(existingPlan);
+        //WHEN
+        Plan actual=planService.checkIn(plan,id);
+        //THEN
+        verify(planRepository).findById(id);
+        verify(planRepository).save(existingPlan);
+        assertEquals(existingPlan,actual);
+    }
+    @Test
+    void getNumberOfPlan() {
+        //GIVEN
+        String id="1";
+        Plan plan=new Plan(id,"description1",true,null,1);
+        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
+        //WHEN
+        Plan actual=planService.getNumberOfPlan(id);
+        //THEN
+        verify(planRepository).findById(id);
+        assertEquals(plan,actual);
+    }
+    @Test
+    void getDateOfCheckIns() {
+        //GIVEN
+        String id="1";
+        Plan plan=new Plan(id,"description1",true,null,1);
+        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
+        //WHEN
+        Plan actual=planService.getDateOfCheckIns(id);
+        //THEN
+        verify(planRepository).findById(id);
+        assertEquals(plan,actual);
     }
 }

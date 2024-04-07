@@ -20,7 +20,6 @@ export default function PlanDetailsPage(): JSX.Element {
         axios.get(`/api/plan/${id}`)
             .then(response => {
                 setPlans([response.data]);
-                console.log(response.data)
             })
             .catch(error => {
                 console.error('Error fetching plans:', error);

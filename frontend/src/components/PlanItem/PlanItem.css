@@ -38,9 +38,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.text{
+.description {
     color: #33658a;
     font-size: large;
+    text-decoration: none;
 }
 .text:hover{
     background-color: #ff8fab;
