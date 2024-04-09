@@ -8,6 +8,7 @@ type CheckButtonProps = {
     updateData: (plan:Plan) => void;
 }
 export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonProps>) {
+    const currentDate = new Date();
     const [isChecked, setIsChecked] = useState(plan.checked);
     const [counter, setCounter] = useState(0);
     const [description, setDescription] = useState(plan.description);
@@ -21,9 +22,10 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
         setDescription(plan.description);
         updateData(plan);
 
-        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description})
+        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description, datumOfCheckIns:currentDate, numberOfCheckIns: counter})
             .then(response => {
-                console.log(response.data.description)
+                console.log(response.data)
+                console.log(response.data.datumOfCheckIns)
             })
             .catch(error => {
                 console.error('Error checking in:', error);

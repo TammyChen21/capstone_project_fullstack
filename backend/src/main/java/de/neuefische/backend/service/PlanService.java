@@ -39,7 +39,7 @@ public class PlanService {
         existingPlan.setId(id);
         existingPlan.setDescription(plan.getDescription());
         existingPlan.setChecked(plan.isChecked());
-        existingPlan.setDatumOfCheckIns(new Date());
+        existingPlan.addDatumOfCheckIns(new Date());
 
         if (existingPlan.isChecked()) {
             existingPlan.setNumberOfCheckIns(existingPlan.getNumberOfCheckIns() + 1);

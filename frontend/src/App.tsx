@@ -37,7 +37,7 @@ export default function App() {
             id: uuidv4(),
             description: description,
             checked: false,
-            datumOfCheckIns: new Date(),
+            datumOfCheckIns: [],
             numberOfCheckIns: 0
         };
         console.info("New Plan: ", newPlan);
