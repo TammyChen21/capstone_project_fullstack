@@ -42,9 +42,10 @@ export default function PlanDetailsPage(): JSX.Element {
 
         const hasPlanForDate = plans.some(plan =>
             Array.isArray(plan.datumOfCheckIns) &&
-            plan.datumOfCheckIns.some(checkInDate => checkInDate.toDateString() === dateKey)
+            plan.datumOfCheckIns.some(checkInDate => checkInDate.toDateString() === dateKey)&&
+            plan.checked
         );
-        return hasPlanForDate ? '✔' :'❌' ;
+        return hasPlanForDate ? '☑️' :'❌' ;
 
     }
     return (
