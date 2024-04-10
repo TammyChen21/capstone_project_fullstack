@@ -18,8 +18,8 @@ export default function PlanDetailsPage(): JSX.Element {
         axios.get(`/api/plan/date/${id}`)
             .then(response => {
                 const responseData = response.data;
-                console.log(response.data)
-                setPlans([responseData]);
+                setPlans(responseData);
+                console.log(responseData)
             })
             .catch(error => {
                 console.error('Error fetching plans:', error);
@@ -32,11 +32,15 @@ export default function PlanDetailsPage(): JSX.Element {
 
         const hasPlanForDate = plans.some(plan =>
             Array.isArray(plan.datumOfCheckIns) &&
-            plan.datumOfCheckIns.some(checkInDate => new Date(checkInDate).getTime() === dateKey)
-        );
-        console.log(hasPlanForDate)
+            plan.datumOfCheckIns.some(checkInDate =>
+            {const checkInDateTimestamp = new Date(checkInDate).setHours(0, 0, 0, 0);
+                return checkInDateTimestamp === dateKey;})
+    );
+       /* //console.log('Plans:', plans);
+        console.log('Date:', date);
+        console.log('Has plan for date:', hasPlanForDate);*/
 
-        return hasPlanForDate ? "✔" :'❌';
+        return hasPlanForDate ? "✔" :"";
     }
 
     return (
