@@ -1,5 +1,6 @@
 package de.neuefische.backend.model;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,6 @@ import lombok.Data;
 public class UpdatePlan{
     String description;
     boolean checked;
-    Date datumOfCheckIns;
+    List<Date> datumOfCheckIns;
     int numberOfCheckIns;
 }

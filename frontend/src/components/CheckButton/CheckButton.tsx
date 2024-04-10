@@ -21,7 +21,7 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
         setDescription(plan.description);
         updateData(plan);
 
-        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description, numberOfCheckIns: counter, datumOfCheckIns: new Date()})
+        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description, numberOfCheckIns: counter, datumOfCheckIns: [new Date()]})
             .then(response => {
                 console.log(response.data)
             })

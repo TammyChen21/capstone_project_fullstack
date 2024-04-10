@@ -6,10 +6,7 @@ import de.neuefische.backend.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +37,14 @@ public class PlanService {
         existingPlan.setId(id);
         existingPlan.setDescription(plan.getDescription());
         existingPlan.setChecked(plan.isChecked());
-        existingPlan.setDatumOfCheckIns(new Date());
+        List<Date> existingDates = existingPlan.getDatumOfCheckIns();
+        if (existingDates == null) {
+            existingDates = new ArrayList<>();
+        }
+
+        existingDates.add(new Date());
+        existingPlan.setDatumOfCheckIns(existingDates);
+
 
         if (existingPlan.isChecked()) {
             existingPlan.setNumberOfCheckIns(existingPlan.getNumberOfCheckIns() + 1);

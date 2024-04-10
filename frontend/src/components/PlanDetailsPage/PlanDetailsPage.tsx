@@ -26,7 +26,7 @@ export default function PlanDetailsPage(): JSX.Element {
                     if (typeof responseData.datumOfCheckIns === 'string') {
                         responseData.datumOfCheckIns = [new Date(responseData.datumOfCheckIns)];
                     }
-
+                    console.log('Plan data:', responseData.datumOfCheckIns)
                     setPlans([responseData]);
                 } else {
                     console.error('Invalid plans data:', responseData);
