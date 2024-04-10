@@ -10,8 +10,26 @@
     transition: all 0.3s ease;
     box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
 }
+.date{
+    display: flex;
+    flex-direction:row;
+    gap: 16px;
+}
+
 .check{
     width: 28%;
     display:flex;
     justify-content: space-between;
+}
+
+.text{
+    color: #33658a;
+    width: 60%;
+    display: flex;
+}
+
+.counter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

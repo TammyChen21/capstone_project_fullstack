@@ -13,8 +13,9 @@ export default function PlanList({plans,deletePlan,editPlan}:Readonly<PlanListPr
 
     return (
         <div className="plan-list">
+            <h1 style={{color: "hotpink"}}>💖 My Plans</h1>
             <ul className="plans">
-                {plans.map(plan=> (
+                {plans.map(plan => (
                     <PlanItem key={plan.id} plan={plan} deletePlan={deletePlan} editPlan={editPlan}/>
                 ))}
             </ul>

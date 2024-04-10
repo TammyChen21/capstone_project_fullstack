@@ -1,0 +1,38 @@
+.react-calendar{
+    border: 1px solid #ff8fab;
+    border-radius: 10px;
+    background-color: #ffc2d1;
+    height: 40vh;
+    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
+}
+
+.react-calendar__navigation{
+    background-color: #ff8fab;
+}
+
+.react-calendar__navigation__label{
+    background-color: #ff8fab;
+    border: black;
+    color: #33658a;
+}
+
+.react-calendar__navigation__arrow{
+    background-color: #ff8fab;
+    border: black;
+    color: #33658a;
+}
+
+.react-calendar__month-view__weekdays{
+    background-color: #ff8fab;
+    color: #33658a;
+}
+
+
+
+
+
+
+
+
+
+

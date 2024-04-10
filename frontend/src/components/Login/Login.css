@@ -9,12 +9,14 @@
     border-radius: 50px;
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.5) inset;
     margin: 8vh auto;
+
 }
 
 h3{
     color: white;
     font-size: 2.5em;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     text-shadow: 0 0 10px #FF70A6;
 }
 

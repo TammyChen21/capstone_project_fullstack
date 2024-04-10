@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Plan} from "../../types/Plan.ts";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import './PlanDetailsPage.css';
 
 export default function PlanDetailsPage(): JSX.Element {
     const [plans, setPlans] = useState<Plan[]>([]);
@@ -35,8 +36,10 @@ export default function PlanDetailsPage(): JSX.Element {
     }
 
     return (
-        <div>
+        <div className="shell">
+        <div className="calendar">
             <Calendar tileContent={tileContent}  />
+        </div>
         </div>
     )
 }

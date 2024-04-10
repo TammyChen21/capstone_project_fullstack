@@ -33,12 +33,15 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
             <div className="text">
                 {plan.description}
             </div>
-            <div className="check">
-                <CheckButton plan={plan} updateData={updateData}/>
-            </div>
-            <div className="counter">
-                {counter} Days
+            <div className="date">
+                <div className="counter">
+                    {counter} Days
+                </div>
+                <div className="check">
+                    <CheckButton plan={plan} updateData={updateData}/>
+                </div>
+
             </div>
         </div>
-);
+    );
 }

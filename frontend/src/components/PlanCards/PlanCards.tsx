@@ -29,6 +29,7 @@ export default function PlanCards({plans}: Readonly<PlanCardProps>){
         <>
             <AddPlan addPlan={addPlan}/>
             <div>
+                <h1 style={{color: "hotpink"}}>💖 My Plans</h1>
                 <ul className="cards">
                     {plansState.map(plan => (
                         <PlanCard key={plan.id} plan={plan}/>

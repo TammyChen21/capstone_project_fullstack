@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import "./CheckButton.css"
 import axios from "axios";
 import {Plan} from "../../types/Plan.ts";
+import {PiCheckFat} from "react-icons/pi";
 
 type CheckButtonProps = {
     plan: Plan;
@@ -48,7 +49,7 @@ export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonPr
     return (
         <div className="button-box">
             <button onClick={handleButtonClick} className={`check-btn ${isChecked ? 'checked' : 'unchecked'}`}>
-                {isChecked ? 'Cancel' : 'Check'}
+                {isChecked ? 'Cancel' : '✔️'}
             </button>
         </div>
     );
