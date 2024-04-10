@@ -55,7 +55,7 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
             return (
                 <div className="edit">
                     <div className="edit">
-                        <Link to={`/plan/${plan.id}`} className="description">
+                        <Link to={`/plan/date/${plan.id}`} className="description">
                             {plan.description}
                         </Link>
                     </div>

@@ -44,7 +44,7 @@ export default function PlanDetailsPage(): JSX.Element {
             Array.isArray(plan.datumOfCheckIns) &&
             plan.datumOfCheckIns.some(checkInDate => checkInDate.toDateString() === dateKey)
         );
-        return hasPlanForDate ? '✔' :'' ;
+        return hasPlanForDate ? '✔' :'❌' ;
 
     }
 

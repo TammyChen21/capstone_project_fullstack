@@ -44,8 +44,8 @@ public class PlanListController {
         return planService.getNumberOfPlan(id);
     }*/
 
-   @GetMapping("date/{id}")
-    public Plan getDateOfCheckIns(@PathVariable String id) {
+   @GetMapping("/date/{id}")
+    public List<Plan> getDateOfCheckIns(@PathVariable String id) {
         return planService.getDateOfCheckIns(id);
     }
 }

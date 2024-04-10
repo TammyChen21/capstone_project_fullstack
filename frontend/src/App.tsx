@@ -37,7 +37,7 @@ export default function App() {
             id: uuidv4(),
             description: description,
             checked: false,
-            datumOfCheckIns: new Date(),
+            datumOfCheckIns: [],
             numberOfCheckIns: 0
         };
         console.info("New Plan: ", newPlan);
@@ -65,7 +65,7 @@ export default function App() {
               <Route path="/" element={<Login/>} />
               <Route path="/plancards" element={<PlanCards plans={plans} addPlan={addPlan}/>}/>
               <Route path="/plan" element={<PlanList plans={plans} deletePlan={deletePlan} editPlan={editPlan}/>}/>
-              <Route path="/plan/:id" element={<PlanDetailsPage/>}/>
+              <Route path="/plan/date/:id" element={<PlanDetailsPage/>}/>
               <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Layout>

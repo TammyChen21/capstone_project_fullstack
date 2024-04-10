@@ -6,6 +6,7 @@ import de.neuefische.backend.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
@@ -60,9 +61,10 @@ public class PlanService {
             throw new IllegalArgumentException("Plan not found with id: " + id);
         }
     }
-
-     public Plan getDateOfCheckIns(String id) {
-     return planRepository.findById(id)
-             .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
+    public List<Plan> getDateOfCheckIns(String id) {
+        Optional<Plan> optionalPlan = planRepository.findById(id);
+        return optionalPlan.map(Collections::singletonList)
+                .orElse(Collections.emptyList());
     }
-}
+    }
+
