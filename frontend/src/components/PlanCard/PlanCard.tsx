@@ -16,7 +16,7 @@ export default function PlanCard({plan}: Readonly<PlanCardProps>) {
             .then(response => {
                 const { numberOfCheckIns } = response.data;
                 setCounter(numberOfCheckIns);
-
+                console.log(response.data)
             })
             .catch(error => {
                 console.error('Error fetching plan details:', error);

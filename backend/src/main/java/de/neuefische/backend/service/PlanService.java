@@ -39,7 +39,7 @@ public class PlanService {
         existingPlan.setId(id);
         existingPlan.setDescription(plan.getDescription());
         existingPlan.setChecked(plan.isChecked());
-        existingPlan.addDatumOfCheckIns(new Date());
+        existingPlan.setDatumOfCheckIns(new Date());
 
         if (existingPlan.isChecked()) {
             existingPlan.setNumberOfCheckIns(existingPlan.getNumberOfCheckIns() + 1);
@@ -52,7 +52,7 @@ public class PlanService {
         return planRepository.save(existingPlan);
     }
 
-    public Plan getNumberOfPlan(String id) {
+   public Plan getNumberOfPlan(String id) {
         Optional<Plan> optionalPlan = planRepository.findById(id);
         if (optionalPlan.isPresent()) {
             return optionalPlan.get();
@@ -61,7 +61,7 @@ public class PlanService {
         }
     }
 
-    public Plan getDateOfCheckIns(String id) {
+     public Plan getDateOfCheckIns(String id) {
      return planRepository.findById(id)
              .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
     }

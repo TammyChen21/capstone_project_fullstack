@@ -3,7 +3,7 @@ export type Plan = {
     id: string,
     description: string,
     checked: boolean,
-    datumOfCheckIns: Date[],
+    datumOfCheckIns: Date,
     numberOfCheckIns: number
 }
 

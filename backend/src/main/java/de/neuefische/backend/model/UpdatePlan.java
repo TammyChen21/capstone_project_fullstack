@@ -1,7 +1,5 @@
 package de.neuefische.backend.model;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,15 +10,6 @@ import lombok.Data;
 public class UpdatePlan{
     String description;
     boolean checked;
-    List<Date> datumOfCheckIns = new ArrayList<>();
+    Date datumOfCheckIns;
     int numberOfCheckIns;
-
-    public List<Date> getDatumOfCheckIns() {
-        return datumOfCheckIns;
-    }
-
-    public void addDatumOfCheckIn(Date date) {
-        this.datumOfCheckIns.add(date);
-    }
 }
-

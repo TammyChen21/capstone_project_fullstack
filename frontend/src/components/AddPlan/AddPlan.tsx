@@ -21,7 +21,7 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
                 id: uuidv4(),
                 description: inputValue.trim(),
                 checked: false,
-                datumOfCheckIns: [],
+                datumOfCheckIns: new Date,
                 numberOfCheckIns: 0
             };
             setPlans([...plans, newPlan]);
@@ -37,7 +37,7 @@ export default function AddPlan({addPlan}:Readonly<AddPlanProps>) {
             id: uuidv4(),
             description: inputValue,
             checked: false,
-            datumOfCheckIns: [],
+            datumOfCheckIns: new Date,
             numberOfCheckIns: 0
         } as Plan).
         then((response) => {
