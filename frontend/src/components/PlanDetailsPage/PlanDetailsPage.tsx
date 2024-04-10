@@ -18,9 +18,10 @@ export default function PlanDetailsPage(): JSX.Element {
         axios.get(`/api/plan/date/${id}`)
             .then(response => {
                 const responseData = response.data;
-                const checkedPlans = responseData.filter((plan: Plan)  => plan.checked);
-                setPlans(checkedPlans);
-                console.log(responseData)
+                const convertedDates = responseData.map((dateString: string) => new Date(dateString));
+                setPlans(convertedDates);
+                console.log('Response data:', responseData);
+
             })
             .catch(error => {
                 console.error('Error fetching plans:', error);
@@ -28,20 +29,27 @@ export default function PlanDetailsPage(): JSX.Element {
     };
 
     const tileContent = ({ date }: { date: Date}) => {
-        const dateKey = date.getTime();
+        const dateKey = date.toDateString();
+        const hasPlanForDate = plans.some(planDate => planDate.toDateString() === dateKey);
+        return hasPlanForDate ? "✅" : "❌";
+    }
+       /* const dateKey = date.toDateString();
 
         const hasPlanForDate = plans.some(plan =>
             Array.isArray(plan.datumOfCheckIns) &&
             plan.datumOfCheckIns.some(checkInDate =>
-            {const checkInDateTimestamp = new Date(checkInDate).setHours(0, 0, 0, 0);
+            {const checkInDateTimestamp = new Date(checkInDate).toDateString();
+                console.log('CheckInDate:', checkInDateTimestamp);
                 return checkInDateTimestamp === dateKey;})
-    );
-       /* //console.log('Plans:', plans);
-        console.log('Date:', date);
-        console.log('Has plan for date:', hasPlanForDate);*/
 
-        return hasPlanForDate ? "✔" :"";
-    }
+    );
+       console.log('Plans:', plans);
+        console.log('Date:', date);
+        console.log('Has plan for date:', hasPlanForDate);
+       // console.log("dateKey",dateKey)
+
+        return hasPlanForDate ? "✅" :"❌";*/
+
 
     return (
         <div>
