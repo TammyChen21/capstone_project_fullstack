@@ -65,10 +65,12 @@ public class PlanService {
             throw new IllegalArgumentException("Plan not found with id: " + id);
         }
     }
-    public List<Plan> getDateOfCheckIns(String id) {
-        Optional<Plan> optionalPlan = planRepository.findById(id);
-        return optionalPlan.map(Collections::singletonList)
-                .orElse(Collections.emptyList());
+
+    public List<Date> getDateOfCheckIns(String id) {
+        Plan existingPlan = planRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
+        return existingPlan.getDatumOfCheckIns();
     }
+
     }
 

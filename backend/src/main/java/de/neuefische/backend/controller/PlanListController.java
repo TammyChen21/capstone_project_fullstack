@@ -6,6 +6,7 @@ import de.neuefische.backend.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,7 +46,7 @@ public class PlanListController {
     }
 
    @GetMapping("/date/{id}")
-    public List<Plan> getDateOfCheckIns(@PathVariable String id) {
-        return planService.getDateOfCheckIns(id);
+   public List<Date> getCheckInDates(@PathVariable String id) {
+       return planService.getDateOfCheckIns(id);
     }
 }

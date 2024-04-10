@@ -20,7 +20,8 @@ export default function PlanDetailsPage(): JSX.Element {
         axios.get(`/api/plan/date/${id}`)
             .then(response => {
                 const responseData = response.data;
-                console.log(response.data)
+                console.log('Plan data:', responseData)
+                console.log('Plan data:', responseData[0].datumOfCheckIns)
 
                 if (responseData && typeof responseData === 'object' && responseData.id) {
                     if (typeof responseData.datumOfCheckIns === 'string') {
