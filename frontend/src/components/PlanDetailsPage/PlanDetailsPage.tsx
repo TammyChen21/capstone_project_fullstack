@@ -18,7 +18,8 @@ export default function PlanDetailsPage(): JSX.Element {
         axios.get(`/api/plan/date/${id}`)
             .then(response => {
                 const responseData = response.data;
-                setPlans(responseData);
+                const checkedPlans = responseData.filter((plan: Plan)  => plan.checked);
+                setPlans(checkedPlans);
                 console.log(responseData)
             })
             .catch(error => {
@@ -28,7 +29,6 @@ export default function PlanDetailsPage(): JSX.Element {
 
     const tileContent = ({ date }: { date: Date}) => {
         const dateKey = date.getTime();
-        console.log('Date key:', dateKey);
 
         const hasPlanForDate = plans.some(plan =>
             Array.isArray(plan.datumOfCheckIns) &&
