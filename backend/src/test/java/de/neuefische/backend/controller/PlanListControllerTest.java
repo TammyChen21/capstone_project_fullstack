@@ -56,7 +56,6 @@ class PlanListControllerTest {
                             }
                         ]"""));
     }
-
     @Test
     @DirtiesContext
     void expectSuccessfulPost() throws Exception{
