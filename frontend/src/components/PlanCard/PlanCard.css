@@ -4,11 +4,9 @@
     width: 100%;
     height: 100%;
     padding: 1rem;
-    border: 1px solid #ff8fab;
     border-radius: 1rem;
-    background: #ffc2d1;
     transition: all 0.3s ease;
-    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
+    box-shadow: 3px 8px 18px -4px rgba(212, 144, 144, 0.68);
 }
 .date{
     display: flex;

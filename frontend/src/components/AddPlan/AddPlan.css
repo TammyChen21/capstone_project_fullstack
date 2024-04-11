@@ -1,23 +1,30 @@
+
 .btn{
-        display: flex;
-        justify-content: flex-end;
-    }
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
 
 .add-btn{
-    width: 16vw;
-    height: 35px;
-    border-radius: 12px;
-    border:0;
-    background-color: #F69CB6;
-    color:#fff;
-    font-size: 1em;
-    box-shadow: 0 2px 0 #FF70A6;
-    margin-bottom: 18px;
+        background-image: linear-gradient(to right, #FF70A6 0%, lightpink 51%, #FF70A6  100%);
+        transition: 0.3s;
+        background-size: 200% auto;
+        color: white;
+        box-shadow: 0 0 20px #eee;
+        border:0;
+        display: block;
+        width: 16vw;
+        height: 35px;
+        border-radius: 12px;
+        font-size: 1em;
+        margin-bottom: 18px;
+        font-weight: bolder;
 }
 
 .add-btn:hover{
-    background-color: #FF70A6;
-    cursor: pointer;
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
 }
 
 .add-btn:active{
@@ -25,18 +32,9 @@
     transform: translateY(4px);
 }
 
-.add-plan{
-    display:inline-block;
-    width: calc(25% - 12px);
-    min-height: 120px;
-    border-radius: 18px;
-    margin-right: 12px;
-    margin-bottom: 18px;
-    vertical-align: top;
-}
 
 .input{
-   min-height: 30px;
+    min-height: 30px;
     width: 100%;
     border:0;
     outline: 0;
@@ -50,8 +48,9 @@
 }
 
 .add-plan.pink{
-    background-color:#ffc8dd;
-    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
+    width: 80%;
+    border-radius: 1rem;
+    box-shadow: 3px 8px 18px -4px rgba(229, 147, 147, 0.68);
 }
 
 .save-btn{
@@ -59,10 +58,10 @@
     height: 30px;
     border-radius: 12px;
     border:0;
-    background-color: #a2d2ff;
+    background-color: #FF70A6;
     color:#fff;
     font-size: 14px;
-    box-shadow: 0 2px 0 #6fa6d6;
+    margin-left: 210px;
 }
 
 .save-btn:active{
