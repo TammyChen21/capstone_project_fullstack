@@ -5,6 +5,7 @@ import de.neuefische.backend.model.UpdatePlan;
 import de.neuefische.backend.repository.PlanRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,6 +90,19 @@ class PlanServiceTest {
         //THEN
         verify(planRepository).findById(id);
         assertEquals(plan,actual);
+    }
+
+    @Test
+    void getDateOfCheckIns() {
+        //GIVEN
+        String id="1";
+        Plan plan=new Plan(id,"description1",true,null,1);
+        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
+        //WHEN
+        List<Date> actual=planService.getDateOfCheckIns(id);
+        //THEN
+        verify(planRepository).findById(id);
+        assertEquals(plan.getDatumOfCheckIns(),actual);
     }
 
 }

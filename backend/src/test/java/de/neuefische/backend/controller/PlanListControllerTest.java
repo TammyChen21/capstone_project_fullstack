@@ -100,4 +100,24 @@ class PlanListControllerTest {
                 }"""));
     }
 
+    @Test
+    @DirtiesContext
+    void expectSuccessfulGetNumberOfPlan() throws Exception{
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json("""
+                {
+                    "id": "1",
+                    "description": "description1",
+                    "checked": true,
+                    "datumOfCheckIns": null,
+                    "numberOfCheckIns": 1
+                }"""));
+    }
+
 }
