@@ -15,27 +15,15 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
@@ -57,7 +45,7 @@ class PlanListControllerTest {
         planRepository.save(plan);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         [
                             {
                                 "id": "1",
@@ -86,7 +74,7 @@ class PlanListControllerTest {
                         }"""))
         //THEN
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("""
+        .andExpect(content().json("""
                 {
                     "id": "1",
                     "description": "description1",
@@ -126,7 +114,7 @@ class PlanListControllerTest {
                         }"""))
         //THEN
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("""
+        .andExpect(content().json("""
                 {
                     "id": "1",
                     "description": "description2",
@@ -136,25 +124,6 @@ class PlanListControllerTest {
                 }"""));
     }
 
-    @Test
-    @DirtiesContext
-    void getPlanById_shouldReturnPlanWithId_whenPlanWithIdExists() throws Exception {
-        //GIVEN
-        Plan plan=new Plan("1","description1",true,null,1);
-        planRepository.save(plan);
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
-        //THEN
-        .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("""
-                {
-                    "id": "1",
-                    "description": "description1",
-                    "checked": true,
-                    "datumOfCheckIns": null,
-                    "numberOfCheckIns": 1
-                }"""));
-    }
     @Test
     @DirtiesContext
     void checkIn_shouldReturnUpdatedPlan_whenPlanExistsAndCheckedIn() throws Exception {
@@ -168,21 +137,21 @@ class PlanListControllerTest {
         Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
         Plan updatedPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns + 1);
 
-        Mockito.when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
-        Mockito.when(planRepository.save(any(Plan.class))).thenReturn(updatedPlan);
+        planRepository.save(existingPlan);
 
         // WHEN
-        Plan result = planService.checkIn(existingPlan, id);
-
-        // THEN
-        assertNotNull(result);
-        assertEquals(updatedPlan, result);
-        assertEquals(updatedPlan.getId(), result.getId());
-        assertEquals(updatedPlan.getDescription(), result.getDescription());
-        assertEquals(updatedPlan.isChecked(), result.isChecked());
-        assertEquals(updatedPlan.getNumberOfCheckIns(), result.getNumberOfCheckIns());
-        assertEquals(updatedPlan.getDatumOfCheckIns().size(), result.getDatumOfCheckIns().size());
-        assertEquals(updatedPlan.getDatumOfCheckIns(), result.getDatumOfCheckIns());
+        mockMvc.perform(post("/api/plan/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(existingPlan)))
+                // THEN
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(existingPlan.getId()))
+                .andExpect(jsonPath("$.description").value(existingPlan.getDescription()))
+                .andExpect(jsonPath("$.checked").value(existingPlan.isChecked()))
+                .andExpect(jsonPath("$.numberOfCheckIns").value(existingPlan.getNumberOfCheckIns() + 1))
+                .andExpect(jsonPath("$.datumOfCheckIns").isArray())
+                .andExpect(jsonPath("$.datumOfCheckIns", hasSize(existingPlan.getDatumOfCheckIns().size() + 1)));
     }
 
 
@@ -196,7 +165,7 @@ class PlanListControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
         //THEN
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("""
+        .andExpect(content().json("""
                 {
                     "id": "1",
                     "description": "description1",
@@ -217,7 +186,7 @@ class PlanListControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/date/1"))
         //THEN
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(""));
+        .andExpect(content().string(""));
 
     }
     }
