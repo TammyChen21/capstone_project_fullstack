@@ -31,7 +31,6 @@ export default function PlanDetailsPage(): JSX.Element {
 
     const tileContent = ({ date }: { date: Date}) => {
         const dateKey = date.toDateString();
-        console.log(plans)
         const hasPlanForDate = plans.some(plan => plan instanceof Date && plan.toDateString() === dateKey);
         return hasPlanForDate ? "✅" : "";
     }
