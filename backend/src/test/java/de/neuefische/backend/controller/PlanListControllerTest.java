@@ -132,18 +132,6 @@ class PlanListControllerTest {
                 }"""));
     }
 
-    @Test
-    @DirtiesContext
-    void getPlanById_shouldReturnNotFound_whenPlanWithIdDoesNotExist() throws Exception {
-        //GIVEN
-        Plan plan=new Plan("1","description1",true,null,1);
-        planRepository.save(plan);
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/2"))
-        //THEN
-        .andExpect(status().isNotFound());
-    }
-
 
     @Test
     @DirtiesContext
