@@ -100,6 +100,7 @@ class PlanServiceTest {
 
         verify(planRepository, times(1)).save(any(Plan.class));
     }
+
     @Test
     void getNumberOfPlan() {
         //GIVEN
