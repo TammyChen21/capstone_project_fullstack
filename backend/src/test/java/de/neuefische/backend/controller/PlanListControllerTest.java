@@ -2,7 +2,9 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.Plan;
 import de.neuefische.backend.repository.PlanRepository;
+import de.neuefische.backend.service.PlanService;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +14,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
+import static org.bson.assertions.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
@@ -23,14 +33,24 @@ class PlanListControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private PlanRepository planRepository;
+    @InjectMocks
+    private PlanService planService;
     @Test
-    void ExpectEmptyListOnGetAll() throws Exception {
-        List<Plan> planList= List.of();
-        //WHEN
+    void getAllPlans_shouldReturnListWithOnePlan_whenOnePlanWasSavedInRepository() throws Exception {
+      Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan"))
-        //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("[]"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        [
+                            {
+                                "id": "1",
+                                "description": "description1",
+                                "checked": true,
+                                "datumOfCheckIns": null,
+                                "numberOfCheckIns": 1
+                            }
+                        ]"""));
     }
 
     @Test
@@ -102,6 +122,58 @@ class PlanListControllerTest {
 
     @Test
     @DirtiesContext
+    void getPlanById_shouldReturnPlanWithId_whenPlanWithIdExists() throws Exception {
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json("""
+                {
+                    "id": "1",
+                    "description": "description1",
+                    "checked": true,
+                    "datumOfCheckIns": null,
+                    "numberOfCheckIns": 1
+                }"""));
+    }
+
+    @Test
+    @DirtiesContext
+    void getPlanById_shouldReturnNotFound_whenPlanWithIdDoesNotExist() throws Exception {
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/2"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    @DirtiesContext
+    void expectSuccessfulCheckIn() throws Exception{
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/plan/1"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json("""
+                {
+                    "id": "1",
+                    "description": "description1",
+                    "checked": false,
+                    "datumOfCheckIns": null,
+                    "numberOfCheckIns": 2
+                }"""));
+    }
+
+    @Test
+    @DirtiesContext
     void expectSuccessfulGetNumberOfPlan() throws Exception{
         //GIVEN
         Plan plan=new Plan("1","description1",true,null,1);
@@ -118,6 +190,20 @@ class PlanListControllerTest {
                     "datumOfCheckIns": null,
                     "numberOfCheckIns": 1
                 }"""));
+    }
+
+
+    @Test
+    @DirtiesContext
+    void expectSuccessfulGetDateOfCheckIns() throws Exception{
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/date/1"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
 
 }

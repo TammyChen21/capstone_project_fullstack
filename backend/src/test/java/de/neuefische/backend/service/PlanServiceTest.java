@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -66,18 +67,36 @@ class PlanServiceTest {
     }
     @Test
     void checkIn() {
-        //GIVEN
-        String id="1";
-        Plan plan=new Plan(id,"description1",true,null,1);
-        Plan existingPlan=new Plan(id,"description1",true,null,1);
-        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(existingPlan));
-        when(planRepository.save(existingPlan)).thenReturn(existingPlan);
-        //WHEN
-        Plan actual=planService.checkIn(plan,id);
-        //THEN
-        verify(planRepository).findById(id);
-        verify(planRepository).save(existingPlan);
-        assertEquals(existingPlan,actual);
+        String id = "123";
+        String description = "Existing Plan";
+        boolean checked = true;
+        int numberOfCheckIns = 0;
+        List<Date> datumOfCheckIns = null;
+
+        Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
+
+        when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
+        when(planRepository.save(any(Plan.class))).thenAnswer(invocation -> {
+            Plan updatedPlan = invocation.getArgument(0);
+            updatedPlan.setNumberOfCheckIns(updatedPlan.getNumberOfCheckIns() + 1);
+            if (updatedPlan.isChecked()) {
+                updatedPlan.getDatumOfCheckIns().add(new Date());
+            }
+            return updatedPlan;
+        });
+
+        Plan updatedPlan = planService.checkIn(existingPlan, id);
+
+        assertNotNull(updatedPlan);
+        assertEquals(id, updatedPlan.getId());
+        assertEquals(description, updatedPlan.getDescription());
+        assertTrue(updatedPlan.isChecked());
+
+        assertEquals(2, updatedPlan.getNumberOfCheckIns());
+        assertNotNull(updatedPlan.getDatumOfCheckIns());
+        assertEquals(2, updatedPlan.getDatumOfCheckIns().size());
+
+        verify(planRepository, times(1)).save(any(Plan.class));
     }
     @Test
     void getNumberOfPlan() {
