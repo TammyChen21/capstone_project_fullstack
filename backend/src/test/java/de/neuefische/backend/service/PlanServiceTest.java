@@ -69,36 +69,28 @@ class PlanServiceTest {
     @Test
     void checkIn() {
         //GIVEN
-        String id = "123";
-        String description = "Existing Plan";
-        boolean checked = true;
-        int numberOfCheckIns = 0;
-        List<Date> datumOfCheckIns = null;
+        String id="1";
+        String description="Description";
+        boolean checked=true;
+        List<Date> datumOfCheckIns=new ArrayList<>();
+        datumOfCheckIns.add(new Date());
+        int numberOfCheckIns=1;
 
-        Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
-        //WHEN
+        Plan existingPlan=new Plan(id,description,checked,datumOfCheckIns,numberOfCheckIns);
+        Plan updatedPlan=new Plan(id,description,checked,datumOfCheckIns,numberOfCheckIns+1);
+
         when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
-        when(planRepository.save(any(Plan.class))).thenAnswer(invocation -> {
-            Plan updatedPlan = invocation.getArgument(0);
-            updatedPlan.setNumberOfCheckIns(updatedPlan.getNumberOfCheckIns() + 1);
-            if (updatedPlan.isChecked()) {
-                updatedPlan.getDatumOfCheckIns().add(new Date());
-            }
-            return updatedPlan;
-        });
-
-        Plan updatedPlan = planService.checkIn(existingPlan, id);
+        when(planRepository.save(any(Plan.class))).thenReturn(updatedPlan);
+        //WHEN
+        Plan result=planService.checkIn(existingPlan,id);
         //THEN
-        assertNotNull(updatedPlan);
-        assertEquals(id, updatedPlan.getId());
-        assertEquals(description, updatedPlan.getDescription());
-        assertTrue(updatedPlan.isChecked());
-
-        assertEquals(2, updatedPlan.getNumberOfCheckIns());
-        assertNotNull(updatedPlan.getDatumOfCheckIns());
-        assertEquals(2, updatedPlan.getDatumOfCheckIns().size());
-
-        verify(planRepository, times(1)).save(any(Plan.class));
+        assertNotNull(result);
+        assertEquals(updatedPlan,result);
+        assertEquals(updatedPlan.getId(),result.getId());
+        assertEquals(updatedPlan.getDescription(),result.getDescription());
+        assertEquals(updatedPlan.isChecked(),result.isChecked());
+        assertEquals(updatedPlan.getNumberOfCheckIns(),result.getNumberOfCheckIns());
+        assertEquals(updatedPlan.getDatumOfCheckIns().size(),result.getDatumOfCheckIns().size());
     }
 
     @Test

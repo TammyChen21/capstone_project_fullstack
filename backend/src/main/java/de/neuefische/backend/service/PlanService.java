@@ -35,6 +35,7 @@ public class PlanService {
             throw new IllegalStateException("planRepository is not initialized");
         }
 
+
         Plan existingPlan = planRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Plan not found: " + id));
 
