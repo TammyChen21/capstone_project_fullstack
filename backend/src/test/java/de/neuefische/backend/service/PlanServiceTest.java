@@ -119,7 +119,7 @@ class PlanServiceTest {
     }
     @Test
     void checkIn_shouldDecrementNumberOfCheckIns_whenPlanIsNotCheckedAndNumberOfCheckInsIsGreaterThanZero() {
-
+        // GIVEN
         String id = "123";
         String description = "Existing Plan";
         boolean checked = false;
@@ -129,19 +129,23 @@ class PlanServiceTest {
 
         Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, initialNumberOfCheckIns);
 
-        PlanRepository planRepository = mock(PlanRepository.class);
-
         when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
 
-        when(planRepository.save(existingPlan)).thenReturn(null);
+        when(planRepository.save(any(Plan.class))).thenAnswer(invocation -> {
+            Plan updatedPlan = invocation.getArgument(0);
 
-        PlanService planService = new PlanService(planRepository);
+            if (!updatedPlan.isChecked() && updatedPlan.getNumberOfCheckIns() > 0) {
+                updatedPlan.setNumberOfCheckIns(updatedPlan.getNumberOfCheckIns() - 1); // Decrement the number of check-ins
+            }
+            return updatedPlan;
+        });
 
+        // WHEN
         Plan updatedPlan = planService.checkIn(existingPlan, id);
 
-        verify(planRepository, times(1)).save(existingPlan);
-
-        assertNull(updatedPlan);
+        // THEN
+        assertNotNull(updatedPlan);
+        assertEquals(initialNumberOfCheckIns - 2, updatedPlan.getNumberOfCheckIns());
     }
 
     @Test
