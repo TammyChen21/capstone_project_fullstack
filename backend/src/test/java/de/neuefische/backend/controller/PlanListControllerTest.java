@@ -11,18 +11,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 import java.util.Optional;
 
 import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
 import static org.bson.assertions.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -40,7 +43,7 @@ class PlanListControllerTest {
       Plan plan=new Plan("1","description1",true,null,1);
         planRepository.save(plan);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         [
                             {
@@ -69,7 +72,7 @@ class PlanListControllerTest {
                             "numberOfCheckIns": 1
                         }"""))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().json("""
                 {
                     "id": "1",
@@ -89,7 +92,7 @@ class PlanListControllerTest {
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/plan/1"))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        .andExpect(status().isOk());
     }
 
     @Test
@@ -109,7 +112,7 @@ class PlanListControllerTest {
                             "numberOfCheckIns": 2
                         }"""))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().json("""
                 {
                     "id": "1",
@@ -129,7 +132,7 @@ class PlanListControllerTest {
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().json("""
                 {
                     "id": "1",
@@ -149,7 +152,7 @@ class PlanListControllerTest {
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/2"))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isNotFound());
+        .andExpect(status().isNotFound());
     }
 
 
@@ -162,7 +165,7 @@ class PlanListControllerTest {
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/1"))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().json("""
                 {
                     "id": "1",
@@ -183,8 +186,9 @@ class PlanListControllerTest {
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/plan/date/1"))
         //THEN
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json("[]"));
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.content().string(""));
+
+    }
     }
 
-}
