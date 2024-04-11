@@ -5,6 +5,7 @@ import de.neuefische.backend.model.UpdatePlan;
 import de.neuefische.backend.repository.PlanRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,7 @@ class PlanServiceTest {
     }
     @Test
     void checkIn() {
+        //GIVEN
         String id = "123";
         String description = "Existing Plan";
         boolean checked = true;
@@ -74,7 +76,7 @@ class PlanServiceTest {
         List<Date> datumOfCheckIns = null;
 
         Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
-
+        //WHEN
         when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
         when(planRepository.save(any(Plan.class))).thenAnswer(invocation -> {
             Plan updatedPlan = invocation.getArgument(0);
@@ -86,7 +88,7 @@ class PlanServiceTest {
         });
 
         Plan updatedPlan = planService.checkIn(existingPlan, id);
-
+        //THEN
         assertNotNull(updatedPlan);
         assertEquals(id, updatedPlan.getId());
         assertEquals(description, updatedPlan.getDescription());
@@ -101,27 +103,52 @@ class PlanServiceTest {
     @Test
     void getNumberOfPlan() {
         //GIVEN
-        String id="1";
-        Plan plan=new Plan(id,"description1",true,null,1);
-        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
+        String id = "123";
+        String description = "Test Plan";
+        boolean checked = true;
+        int numberOfCheckIns = 5;
+        List<Date> datumOfCheckIns = new ArrayList<>();
+        datumOfCheckIns.add(new Date());
+        datumOfCheckIns.add(new Date());
+
+        Plan plan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
+
         //WHEN
-        Plan actual=planService.getNumberOfPlan(id);
+        when(planRepository.findById(id)).thenReturn(Optional.of(plan));
+        Plan retrievedPlan = planService.getNumberOfPlan(id);
+
         //THEN
-        verify(planRepository).findById(id);
-        assertEquals(plan,actual);
+        assertNotNull(retrievedPlan);
+        assertEquals(id, retrievedPlan.getId());
+        assertEquals(description, retrievedPlan.getDescription());
+        assertEquals(checked, retrievedPlan.isChecked());
+        assertEquals(numberOfCheckIns, retrievedPlan.getNumberOfCheckIns());
+        assertEquals(datumOfCheckIns, retrievedPlan.getDatumOfCheckIns());
+
+        verify(planRepository, times(1)).findById(id);
     }
 
     @Test
     void getDateOfCheckIns() {
         //GIVEN
-        String id="1";
-        Plan plan=new Plan(id,"description1",true,null,1);
-        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
-        //WHEN
-        List<Date> actual=planService.getDateOfCheckIns(id);
-        //THEN
-        verify(planRepository).findById(id);
-        assertEquals(plan.getDatumOfCheckIns(),actual);
+        String id = "123";
+        List<Date> datumOfCheckIns = new ArrayList<>();
+        datumOfCheckIns.add(new Date());
+        datumOfCheckIns.add(new Date());
+
+        Plan existingPlan = new Plan("123", "Description", true, datumOfCheckIns, 2);
+
+        when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
+
+        // WHEN
+        List<Date> retrievedDatumOfCheckIns = planService.getDateOfCheckIns(id);
+
+        // THEN
+        assertNotNull(retrievedDatumOfCheckIns);
+        assertEquals(datumOfCheckIns.size(), retrievedDatumOfCheckIns.size());
+        assertEquals(datumOfCheckIns, retrievedDatumOfCheckIns);
+
+        verify(planRepository, times(1)).findById(id);
     }
 
 }
