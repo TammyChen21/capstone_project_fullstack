@@ -18,7 +18,7 @@ export default function PlanCards({plans}: Readonly<PlanCardProps>){
             id: uuidv4(),
             description: description,
             checked: false,
-            datumOfCheckIns: new Date,
+            datumOfCheckIns: [new Date],
             numberOfCheckIns: 0
         };
         console.info("New Plan: ", newPlan)

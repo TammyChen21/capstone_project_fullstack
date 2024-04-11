@@ -90,16 +90,5 @@ class PlanServiceTest {
         verify(planRepository).findById(id);
         assertEquals(plan,actual);
     }
-   /* @Test
-    void getDateOfCheckIns() {
-        //GIVEN
-        String id="1";
-        Plan plan=new Plan(id,"description1",true,null,1);
-        when(planRepository.findById(id)).thenReturn(java.util.Optional.of(plan));
-        //WHEN
-        Plan actual=planService.getDateOfCheckIns(id);
-        //THEN
-        verify(planRepository).findById(id);
-        assertEquals(plan,actual);
-    }*/
+
 }

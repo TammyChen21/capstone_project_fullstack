@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import "./CheckButton.css"
 import axios from "axios";
 import {Plan} from "../../types/Plan.ts";
-import {PiCheckFat} from "react-icons/pi";
 
 type CheckButtonProps = {
     plan: Plan;

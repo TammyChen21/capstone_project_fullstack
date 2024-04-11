@@ -60,4 +60,44 @@ class PlanListControllerTest {
                 }"""));
     }
 
+    @Test
+    @DirtiesContext
+    void expectSuccessfulDelete() throws Exception{
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/plan/1"))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DirtiesContext
+    void expectSuccessfulPut() throws Exception{
+        //GIVEN
+        Plan plan=new Plan("1","description1",true,null,1);
+        planRepository.save(plan);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/plan/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                            "description": "description2",
+                            "checked": false,
+                            "datumOfCheckIns": null,
+                            "numberOfCheckIns": 2
+                        }"""))
+        //THEN
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json("""
+                {
+                    "id": "1",
+                    "description": "description2",
+                    "checked": false,
+                    "datumOfCheckIns": null,
+                    "numberOfCheckIns": 2
+                }"""));
+    }
+
 }

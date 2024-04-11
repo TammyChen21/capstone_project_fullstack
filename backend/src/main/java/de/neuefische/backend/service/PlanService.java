@@ -32,7 +32,7 @@ public class PlanService {
 
     public Plan checkIn(Plan plan, String id) {
         Plan existingPlan = planRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Plan not found: " + id));
 
         existingPlan.setId(id);
         existingPlan.setDescription(plan.getDescription());
