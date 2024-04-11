@@ -4,18 +4,17 @@ import de.neuefische.backend.model.Plan;
 import de.neuefische.backend.model.UpdatePlan;
 import de.neuefische.backend.repository.PlanRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PlanServiceTest {
 
-    PlanRepository planRepository=mock(PlanRepository.class);
+    PlanRepository planRepository= Mockito.mock(PlanRepository.class);
     PlanService planService=new PlanService(planRepository);
     @Test
     void findAllPlans() {
@@ -94,31 +93,83 @@ class PlanServiceTest {
     }
 
     @Test
-    void getNumberOfPlan() {
-        //GIVEN
-        String id = "123";
-        String description = "Test Plan";
+    void checkIn_shouldIncrementNumberOfCheckIns_whenPlanIsChecked() {
+        // GIVEN
+        String id = "1";
+        String description = "Description";
         boolean checked = true;
-        int numberOfCheckIns = 5;
+        List<Date> datumOfCheckIns = new ArrayList<>();
+        int numberOfCheckIns = 1;
+
+        Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
+
+        when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
+        when(planRepository.save(any(Plan.class))).thenAnswer(invocation -> {
+            Plan updatedPlan = invocation.getArgument(0);
+            updatedPlan.setNumberOfCheckIns(updatedPlan.getNumberOfCheckIns() + 1);
+            return updatedPlan;
+        });
+
+        // WHEN
+        Plan updatedPlan = planService.checkIn(existingPlan, id);
+
+        // THEN
+        assertNotNull(updatedPlan);
+        assertEquals(3, updatedPlan.getNumberOfCheckIns());
+    }
+    @Test
+    void checkIn_shouldDecrementNumberOfCheckIns_whenPlanIsNotCheckedAndNumberOfCheckInsIsGreaterThanZero() {
+
+        String id = "123";
+        String description = "Existing Plan";
+        boolean checked = false;
+        int initialNumberOfCheckIns = 2;
         List<Date> datumOfCheckIns = new ArrayList<>();
         datumOfCheckIns.add(new Date());
-        datumOfCheckIns.add(new Date());
 
-        Plan plan = new Plan(id, description, checked, datumOfCheckIns, numberOfCheckIns);
+        Plan existingPlan = new Plan(id, description, checked, datumOfCheckIns, initialNumberOfCheckIns);
 
-        //WHEN
-        when(planRepository.findById(id)).thenReturn(Optional.of(plan));
-        Plan retrievedPlan = planService.getNumberOfPlan(id);
+        PlanRepository planRepository = mock(PlanRepository.class);
 
-        //THEN
-        assertNotNull(retrievedPlan);
-        assertEquals(id, retrievedPlan.getId());
-        assertEquals(description, retrievedPlan.getDescription());
-        assertEquals(checked, retrievedPlan.isChecked());
-        assertEquals(numberOfCheckIns, retrievedPlan.getNumberOfCheckIns());
-        assertEquals(datumOfCheckIns, retrievedPlan.getDatumOfCheckIns());
+        when(planRepository.findById(id)).thenReturn(Optional.of(existingPlan));
 
-        verify(planRepository, times(1)).findById(id);
+        when(planRepository.save(existingPlan)).thenReturn(null);
+
+        PlanService planService = new PlanService(planRepository);
+
+        Plan updatedPlan = planService.checkIn(existingPlan, id);
+
+        verify(planRepository, times(1)).save(existingPlan);
+
+        assertNull(updatedPlan);
+    }
+
+    @Test
+    void testGetNumberOfPlan_WhenPlanExists() {
+        // GIVEN
+        String id = "1";
+        Plan expectedPlan = new Plan(id, "Description", true, null, 0);
+        Mockito.when(planRepository.findById(id)).thenReturn(Optional.of(expectedPlan));
+
+        // WHEN
+        Plan result = planService.getNumberOfPlan(id);
+
+        // THEN
+        assertEquals(expectedPlan, result);
+    }
+
+    @Test
+    void testGetNumberOfPlan_WhenPlanDoesNotExist() {
+        // GIVEN
+        String id = "1";
+        Mockito.when(planRepository.findById(id)).thenReturn(Optional.empty());
+
+        // WHEN
+        Executable executable = () -> planService.getNumberOfPlan(id);
+
+        // THEN
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, executable);
+        assertEquals("Plan not found with id: " + id, exception.getMessage());
     }
 
     @Test
