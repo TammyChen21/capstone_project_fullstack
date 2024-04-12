@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 import "./CheckButton.css"
+import axios from "axios";
+import {Plan} from "../../types/Plan.ts";
 
-export default function CheckButton  ()  {
-    const [isChecked, setIsChecked] = useState(false);
+type CheckButtonProps = {
+    plan: Plan;
+    updateData: (plan:Plan) => void;
+}
+export default function CheckButton  ({plan, updateData}: Readonly<CheckButtonProps>) {
+    const [isChecked, setIsChecked] = useState(plan.checked);
     const [counter, setCounter] = useState(0);
-
+    const [description, setDescription] = useState(plan.description);
     const handleButtonClick = () => {
         if (isChecked) {
             setCounter(prevCounter => prevCounter - 1);
@@ -12,6 +18,17 @@ export default function CheckButton  ()  {
             setCounter(prevCounter => prevCounter + 1);
         }
         setIsChecked(prevChecked => !prevChecked);
+        setDescription(plan.description);
+        updateData(plan);
+
+        axios.post(`/api/plan/${plan.id}`, { checked: !isChecked, description: description, numberOfCheckIns: counter, datumOfCheckIns: [new Date()]})
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Error checking in:', error);
+
+            });
     };
 
     const isMidnight = () => {
@@ -30,9 +47,8 @@ export default function CheckButton  ()  {
 
     return (
         <div className="button-box">
-            <p className="counter">{counter} Days</p>
             <button onClick={handleButtonClick} className={`check-btn ${isChecked ? 'checked' : 'unchecked'}`}>
-                {isChecked ? 'Cancel' : 'Check'}
+                {isChecked ? 'Cancel' : '✔️'}
             </button>
         </div>
     );

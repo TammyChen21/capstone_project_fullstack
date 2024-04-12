@@ -1,0 +1,30 @@
+.react-calendar{
+    border-radius: 20px;
+    height: 40vh;
+    box-shadow: 3px 8px 18px -4px rgba(252,172,172,0.68);
+}
+
+
+.react-calendar__navigation__label{
+    border: black;
+    color: #33658a;
+}
+
+.react-calendar__navigation__arrow{
+    border: black;
+    color: #33658a;
+}
+
+.react-calendar__month-view__weekdays{
+    color: #33658a;
+}
+
+
+
+
+
+
+
+
+
+

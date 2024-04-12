@@ -10,11 +10,12 @@ type PlanListProps = {
     editPlan: (id:string, description:string) => void;
 }
 export default function PlanList({plans,deletePlan,editPlan}:Readonly<PlanListProps>) {
-    console.log("Plans: ", plans)
+
     return (
         <div className="plan-list">
+            <h1>💖 My Habits</h1>
             <ul className="plans">
-                {plans.map(plan=> (
+                {plans.map(plan => (
                     <PlanItem key={plan.id} plan={plan} deletePlan={deletePlan} editPlan={editPlan}/>
                 ))}
             </ul>

@@ -1,9 +1,14 @@
 .header {
+    width: 100%;
+    height: 8vh;
     display: flex;
     justify-content: center;
-    border-radius: 10px;
     background-color: #F69CB6F6;
     padding: 10px;
 }
 
+h1 {
+    color: white;
+    text-shadow: 0 0 10px #FF70A6;
+}
 

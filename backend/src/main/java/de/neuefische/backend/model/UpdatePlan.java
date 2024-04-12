@@ -1,11 +1,16 @@
 package de.neuefische.backend.model;
-
 import java.util.Date;
+import java.util.List;
 
-public record UpdatePlan(
-        String description,
-        boolean checked,
-        Date datumOfCheckIns,
-        int numberOfCheckIns
-) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+
+@AllArgsConstructor
+@Data
+public class UpdatePlan{
+    String description;
+    boolean checked;
+    List<Date> datumOfCheckIns;
+    int numberOfCheckIns;
 }

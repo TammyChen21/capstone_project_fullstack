@@ -8,7 +8,8 @@ import PlanCards from "./components/PlanCards/PlanCards.tsx";
 import Layout from "./components/Layout/Layout.tsx";
 import {Route, Routes} from "react-router-dom";
 import {Profile} from "./components/Profile/Profile.tsx";
-import PlanDetailsPage from "./components/PlanDetailsPage.tsx";
+import PlanDetailsPage from "./components/PlanDetailsPage/PlanDetailsPage.tsx";
+import Login from "./components/Login/Login.tsx";
 
 export default function App() {
 
@@ -36,7 +37,7 @@ export default function App() {
             id: uuidv4(),
             description: description,
             checked: false,
-            datumOfCheckIns: new Date(),
+            datumOfCheckIns: [],
             numberOfCheckIns: 0
         };
         console.info("New Plan: ", newPlan);
@@ -61,10 +62,10 @@ export default function App() {
   return (
       <Layout>
          <Routes>
-              <Route path="/" element={<h1>Home</h1>} />
+              <Route path="/" element={<Login/>} />
               <Route path="/plancards" element={<PlanCards plans={plans} addPlan={addPlan}/>}/>
               <Route path="/plan" element={<PlanList plans={plans} deletePlan={deletePlan} editPlan={editPlan}/>}/>
-              <Route path="/plan/:id" element={<PlanDetailsPage/>}/>
+              <Route path="/plan/date/:id" element={<PlanDetailsPage/>}/>
               <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Layout>

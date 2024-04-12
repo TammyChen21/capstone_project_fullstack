@@ -2,7 +2,7 @@ import {Plan} from "../../types/Plan.ts";
 import axios from "axios";
 import {useState} from "react";
 import "./PlanItem.css";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 type PlanItemProps = {
     plan: Plan;
@@ -13,7 +13,6 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editedDescription, setEditedDescription] = useState(plan.description);
-    const navigate = useNavigate();
 
     function deleteThisPlan(id:string) {
     axios.delete(`/api/plan/${id}`)
@@ -40,10 +39,6 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
             });
     }
 
-    function ToDetailsPage(id:string){
-        navigate("/plan/" + id);
-    }
-
     const renderContent = () => {
         if (isEditing) {
             return (
@@ -59,17 +54,10 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
         } else {
             return (
                 <div className="edit">
-                    <div
-                        className="text"
-                        onClick={() => {ToDetailsPage(plan.id)}}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                ToDetailsPage(plan.id)
-                            }
-                        }}
-                        tabIndex={0}
-                    >
-                        {plan.description}
+                    <div className="edit">
+                        <Link to={`/plan/date/${plan.id}`} className="description">
+                            {plan.description}
+                        </Link>
                     </div>
                     <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
                 </div>
@@ -79,7 +67,7 @@ export default function PlanItem({plan,deletePlan,editPlan}:Readonly<PlanItemPro
 
 
     return (
-        <div className="plan-item" >
+        <div className="plan-item">
             {renderContent()}
             <button onClick={handleDeleteClick} className="delete-btn">Delete</button>
         </div>

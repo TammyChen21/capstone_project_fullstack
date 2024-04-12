@@ -10,7 +10,7 @@ type LayoutProps = {
 }
 export default function Layout(props: Readonly<LayoutProps>) {
     return(
-        <>
+        <div className="frame">
             <Header/>
             <div className="container">
                 <main>
@@ -18,6 +18,6 @@ export default function Layout(props: Readonly<LayoutProps>) {
                 </main>
             </div>
             <Navigation/>
-        </>
+        </div>
     )
 }

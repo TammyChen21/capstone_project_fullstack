@@ -6,6 +6,7 @@ import de.neuefische.backend.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,5 +33,20 @@ public class PlanListController {
     @PutMapping("/{id}")
     public Plan putPlan(@RequestBody UpdatePlan plan, @PathVariable String id) {
         return planService.updatePlan(plan, id);
+    }
+
+    @PostMapping("/{id}")
+    public Plan checkIn(@RequestBody Plan plan, @PathVariable String id) {
+        return planService.checkIn(plan, id);
+    }
+
+    @GetMapping("/{id}")
+    public Plan getNumberOfPlan(@PathVariable String id) {
+        return planService.getNumberOfPlan(id);
+    }
+
+   @GetMapping("/date/{id}")
+   public List<Date> getCheckInDates(@PathVariable String id) {
+       return planService.getDateOfCheckIns(id);
     }
 }
