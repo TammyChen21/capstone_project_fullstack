@@ -3,38 +3,39 @@ import {useEffect, useState} from "react";
 type CheckButtonProps = {
     onCheck: () => void;
     onUncheck: () => void;
+    onMidnightChange: (isMidnight: boolean) => void;
 };
 
-export default function CheckButton({ onCheck, onUncheck }: CheckButtonProps) {
-    const [checked, setChecked] = useState(false);
+export default function CheckButton({ onCheck, onUncheck,onMidnightChange}: CheckButtonProps) {
+
+    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
+        const interval = setInterval(() => {
             const now = new Date();
             if (now.getHours() === 0 && now.getMinutes() === 0) {
-                if (checked) {
-                    onUncheck();
-                    setChecked(false);
-                } else {
-                    onCheck();
-                    setChecked(true);
-                }
+                setIsChecked(false);
+                onUncheck();
+                onMidnightChange(true);
+            } else {
+                onMidnightChange(false);
             }
         }, 60000);
+        return () => clearInterval(interval);
+    }, []);
 
-        return () => clearInterval(intervalId);
-    }, [checked, onCheck, onUncheck]);
+    const handleCheck = () => {
+        setIsChecked(true);
+        onCheck();
+    };
 
-    const handleClick = () => {
-        if (checked) {
-            onUncheck();
-        } else {
-            onCheck();
-        }
-        setChecked(!checked);
+    const handleUncheck = () => {
+        setIsChecked(false);
+        onUncheck();
     };
 
     return (
-        <button onClick={handleClick}>{checked ? "Uncheck" : "Check"}</button>
-    );
-}
+        <button onClick={isChecked ? handleUncheck : handleCheck}>
+            {isChecked ? "取消打卡" : "打卡"}
+        </button>
+    );}
